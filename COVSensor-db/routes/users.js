@@ -9,6 +9,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
+// add any user
 router.route('/add').post(async (req, res) => {
     const eMail = req.body.eMail;
     const userName = req.body.userName;
@@ -21,6 +22,37 @@ router.route('/add').post(async (req, res) => {
     });
     if (user) {
         res.status(400).json('Error: User already exists')
+    } else {
+        const salt = await bcrypt.genSalt(10);
+        let newUser = new User({
+            eMail,
+            userName,
+            psw,
+            name,
+            lastName,
+            isAdmin
+        });
+        newUser.psw = await bcrypt.hash(newUser.psw, salt);
+        console.log(newUser)
+        newUser.save()
+            .then(() => res.json('User added.'))
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+})
+
+// Add Supervisor route
+router.route('/supervisor/add').post(async (req, res) => {
+    const eMail = req.body.eMail;
+    const userName = req.body.userName;
+    let psw = req.body.psw;
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const isAdmin = false;
+    const user = await User.findOne({
+        eMail: req.body.eMail,
+    });
+    if (user) {
+        res.status(400).json('Error: Supervisor already exists')
     } else {
         const salt = await bcrypt.genSalt(10);
         let newUser = new User({
