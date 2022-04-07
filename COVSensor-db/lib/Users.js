@@ -1,4 +1,7 @@
 'use strict'
+
+let UsersModel = require('../Schemas/Users')
+
 module.exports = function setupUsers (UsersModel) {
   function add (_user) {    
     const myUser=new UsersModel(_user);
