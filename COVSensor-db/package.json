@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chalk": "^5.0.1",
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.0",
+    "inquirer": "^8.2.2",
+    "mongoose": "^6.2.8",
+    "run-main": "^0.2.3"
+  },
+  "name": "covsensor-db",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "scripts": {
+    "start": "node index.js",
+    "setupBD": "SET DEBUG=COVSensor:* node db.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernestosanchezm/COVSensor.git"
+  },
+  "author": "Ernesto_Miguel_TP2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ernestosanchezm/COVSensor/issues"
+  },
+  "homepage": "https://github.com/ernestosanchezm/COVSensor#readme",
+  "description": "",
+  "devDependencies": {
+    "ava": "^4.1.0",
+    "standard": "^16.0.4"
+  }
+}
