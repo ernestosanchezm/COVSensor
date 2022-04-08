@@ -1,0 +1,99 @@
+<div class="supervisor-create">
+  <form [formGroup]="form">
+    <mat-card class="mat-elevation-z1">
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Crear Supervisor</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombres</mat-label>
+          <input
+            matInput
+            placeholder="Nombres"
+            type="text"
+            formControlName="name"
+            readonly
+          />
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <div class="messages" *ngIf="nameField.touched && nameField.invalid">
+            <mat-error *ngIf="emailField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input
+            matInput
+            placeholder="Apellidos"
+            type="text"
+            formControlName="lastName"
+            readonly
+          />
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <div
+            class="messages"
+            *ngIf="lastNameField.touched && lastNameField.invalid"
+          >
+            <mat-error *ngIf="lastNameField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+            readonly
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          <div
+            class="messages"
+            *ngIf="emailField.touched && emailField.invalid"
+          >
+            <mat-error *ngIf="emailField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="emailField.hasError('email')">
+              No es un correo correcto
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            formControlName="password"
+            readonly
+          />
+          <mat-icon matSuffix>lock</mat-icon>
+          <div
+            class="messages"
+            *ngIf="passwordField.touched && passwordField.invalid"
+          >
+            <mat-error *ngIf="passwordField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="passwordField.hasError('minlength')">
+              Contraseña incorrecta
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          class="update-button"
+          (click)="openDialog()"
+        >
+          Crear Supervisor
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<div class="report">
+  <h1>Informe de Concentracion</h1>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="Periodo">
+      <th mat-header-cell *matHeaderCellDef>Periodo</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field appearance="fill">
+          <mat-label>Periodo</mat-label>
+          <mat-select [(value)]="informeSelected">
+            <mat-option>None</mat-option>
+            <mat-option value="dia">Dia</mat-option>
+            <mat-option value="semana">Semana</mat-option>
+            <mat-option value="mes">Mes</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Informe">
+      <th mat-header-cell *matHeaderCellDef>Descargar Informe</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary">Descargar</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

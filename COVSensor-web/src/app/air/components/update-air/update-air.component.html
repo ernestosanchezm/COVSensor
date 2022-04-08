@@ -1,0 +1,31 @@
+<div class="update-page">
+  <form [formGroup]="form">
+    <mat-card class="mat-elevation-z1">
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Bomba de Aire</mat-card-title>
+      <mat-card-content>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Descripcion</mat-label>
+          <input
+            matInput
+            placeholder="Descripcion"
+            type="text"
+            formControlName="descripcion"
+            readonly
+          />
+        </mat-form-field>
+        <mat-slide-toggle formControlName="estado">Estado</mat-slide-toggle>
+        <button
+          mat-raised-button
+          color="primary"
+          class="update-button"
+          (click)="openDialog()"
+        >
+          Aceptar
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

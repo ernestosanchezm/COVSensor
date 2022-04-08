@@ -1,0 +1,31 @@
+<!-- <div class="edit-section">
+  <mat-card class="example-card">
+    <mat-card-title-group>
+      <mat-card-title>{{ myAir.codigoEspacioCerrado }}</mat-card-title>
+      <mat-card-subtitle>{{ myAir.estado }}</mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+      {{ myAir.descripcion }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" mat-raised-button routerLink="/air">Ok</button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
+
+<h1 mat-dialog-title>Bombas de Aire:</h1>
+<div mat-dialog-content>
+  <h4>
+    Codigo de Espacio Cerrado: <b>{{ data.bombaAire.codigoEspacioCerrado }}</b>
+  </h4>
+  <h4>
+    Estado: <b>{{ data.bombaAire.estado ? "Activo" : "Inactivo" }}</b>
+  </h4>
+  <h4>
+    Descripcion:
+    <b>{{ data.bombaAire.descripcion }}</b>
+  </h4>
+</div>
+<mat-dialog-actions>
+  <button color="primary" mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>

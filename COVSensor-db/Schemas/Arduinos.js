@@ -4,11 +4,13 @@ const { Schema } = require('mongoose')
 module.exports = new Schema({
   id_AirBomb: {
     type: Schema.Types.ObjectId,
-    ref: 'AirBombs'
+    ref: 'AirBombs',
+    required:false
   },
   id_Alarm: {
     type: Schema.Types.ObjectId,
-    ref: 'Alarms'
+    ref: 'Alarms',
+    required:false
   },
   coordinator: Boolean
 })

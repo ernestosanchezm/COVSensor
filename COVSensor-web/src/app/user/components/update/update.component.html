@@ -1,0 +1,60 @@
+<div class="user-page">
+  <form [formGroup]="form">
+    <mat-card class="mat-elevation-z1">
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Actualizar información</mat-card-title>
+      <mat-card-content>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Nombres</mat-label>
+          <input
+            matInput
+            placeholder="Nombres"
+            type="text"
+            formControlName="name"
+          />
+          <mat-icon matSuffix>account_circle</mat-icon>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <input
+            matInput
+            placeholder="Apellidos"
+            type="text"
+            formControlName="lastName"
+          />
+          <mat-icon matSuffix>account_circle</mat-icon>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            formControlName="password"
+          />
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          class="update-button"
+          (click)="openDialog()"
+        >
+          Actualizar
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

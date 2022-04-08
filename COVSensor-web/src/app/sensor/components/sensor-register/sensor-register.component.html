@@ -1,0 +1,73 @@
+<div class="supervisor-create">
+  <form [formGroup]="formControl">
+    <mat-card class="mat-elevation-z1">
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Crear Sensor de CO2</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Codigo de Espacio Cerrado</mat-label>
+          <input
+            matInput
+            placeholder="Codigo de Espacio Cerrado"
+            type="text"
+            formControlName="codigoEspacioCerrado"
+            readonly
+          />
+          <div
+            class="messages"
+            *ngIf="
+              codigoEspacioCerradoField.touched &&
+              codigoEspacioCerradoField.invalid
+            "
+          >
+            <mat-error *ngIf="codigoEspacioCerradoField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Descripcion</mat-label>
+          <input
+            matInput
+            placeholder="Descripcion"
+            type="text"
+            formControlName="descripcion"
+            readonly
+          />
+          <div
+            class="messages"
+            *ngIf="descripcionField.touched && descripcionField.invalid"
+          >
+            <mat-error *ngIf="descripcionField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-slide-toggle formControlName="estado">Estado</mat-slide-toggle>
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-slide-toggle formControlName="estado"></mat-slide-toggle>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <div
+            class="messages"
+            *ngIf="estadoField.touched && estadoField.invalid"
+          >
+            <mat-error *ngIf="estadoField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field> -->
+        <button
+          mat-raised-button
+          color="primary"
+          class="update-button"
+          (click)="openDialog()"
+        >
+          Crear Sensor
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

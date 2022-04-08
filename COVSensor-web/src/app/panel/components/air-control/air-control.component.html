@@ -1,0 +1,51 @@
+<div class="air-control">
+  <div class="air-control-container">
+    <label class="air-label">Campos cerrados: </label>
+    <form [formGroup]="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Bombas</mat-label>
+        <mat-select [formControl]="myBomba">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let bomba of bombasAire" [value]="bomba">
+            {{ bomba }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="air-control-result" *ngIf="myBomba.value">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+      style="width: 500px"
+    >
+      <ng-container matColumnDef="Codigo de espacio cerrado">
+        <th mat-header-cell *matHeaderCellDef>Codigo de espacio cerrado</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.codigoEspacioCerrado }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Codigo de bomba de aire">
+        <th mat-header-cell *matHeaderCellDef>Codigo de bomba de aire</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.codigoBombaAire }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Estatus">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle formControlName="element.estatus">
+            Estado
+          </mat-slide-toggle>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

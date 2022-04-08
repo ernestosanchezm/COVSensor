@@ -1,0 +1,31 @@
+<!-- <div class="edit-section">
+  <mat-card class="example-card">
+    <mat-card-title-group>
+      <mat-card-title>
+        {{ mySupervisor.nombre + " " + mySupervisor.apellido }}
+      </mat-card-title>
+      <mat-card-subtitle>{{ mySupervisor.correo }}</mat-card-subtitle>
+    </mat-card-title-group>
+    <!-- <mat-card-content>
+      {{ mySupervisor.descripcion }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" mat-raised-button routerLink="/supervisor">
+        Ok
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
+
+<h1 mat-dialog-title>
+  Supervisor:
+  <b>{{ data.supervisor.nombre + " " + data.supervisor.apellido }}</b>
+</h1>
+<div mat-dialog-content>
+  <h4>
+    Correo: <b>{{ data.supervisor.correo }}</b>
+  </h4>
+</div>
+<mat-dialog-actions>
+  <button color="primary" mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>

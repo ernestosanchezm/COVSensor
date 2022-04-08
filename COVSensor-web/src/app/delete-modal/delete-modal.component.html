@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>
+  Estas seguro que desea eliminar
+  {{ data.item == "Bomba de aire" ? "esta" : "este" }} {{ data.item }}?
+</h1>
+<mat-dialog-actions>
+  <button color="primary" mat-button mat-dialog-close (click)="delete()">
+    OK
+  </button>
+  <button color="warn" mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,43 @@
+<div class="recover-page">
+  <form [formGroup]="form">
+    <mat-card>
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-card-title>Recuperar Contraseña</mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Ingresa correo electrónico para restablecer contraseña"
+            type="email"
+            formControlName="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          <div
+            class="messages"
+            *ngIf="emailField.touched && emailField.invalid"
+          >
+            <mat-error *ngIf="emailField.hasError('required')">
+              ¡Se requiere un correo electrónico para restablecer la contraseña!
+            </mat-error>
+            <mat-error *ngIf="emailField.hasError('email')">
+              No es un correo electrónico válido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          class="recover-button"
+          type="submit"
+          [disabled]="form.invalid"
+          (click)="openDialog()"
+        >
+          Recuperar
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+

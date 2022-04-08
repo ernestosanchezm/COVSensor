@@ -1,0 +1,76 @@
+<div class="supervisor">
+  <div class="supervisor-header">
+    <button
+      mat-raised-button
+      color="primary"
+      class="create-button"
+      routerLink="create"
+    >
+      Crear nuevo Espacio
+    </button>
+    <div class="search-supervisor">
+      <mat-form-field
+        appearance="outline"
+        class="search-form-field"
+        floatLabel="always"
+      >
+        <mat-label>Ingrese codigo del espacio a buscar</mat-label>
+        <!-- <input
+          matInput
+          type="text"
+          name="filterSpace"
+          [(ngModel)]="filterSpace"
+        /> -->
+        <input matInput (keyup)="applyFilter($event)" #input />
+      </mat-form-field>
+      <!-- <button mat-raised-button color="primary" class="search-button" (click)="search()">
+        Buscar
+      </button> -->
+    </div>
+  </div>
+  <table
+    mat-table
+    [dataSource]="spaces"
+    class="mat-elevation-z8 supervisor-table"
+  >
+    <ng-container matColumnDef="Codigo">
+      <th mat-header-cell *matHeaderCellDef>Codigo</th>
+      <td mat-cell *matCellDef="let space">{{ space.codigo }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+      <td mat-cell *matCellDef="let space">
+        {{ space.descripcion }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let space">
+        {{ space.estado ? "Activo" : "Inactivo" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Acciones">
+      <th class="th-acciones" mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td class="td-acciones" mat-cell *matCellDef="let space">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openDialog(space)"
+          class="detail-button"
+        >
+          Detalle
+        </button>
+        <button class="btn-details" mat-raised-button (click)="goToEdit(space)">
+          Editar
+        </button>
+        <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+          Eliminar
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<!-- routerLink="detail" -->

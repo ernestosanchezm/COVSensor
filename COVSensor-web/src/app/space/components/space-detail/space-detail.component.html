@@ -1,0 +1,30 @@
+<!-- <div class="edit-section">
+  <mat-card class="example-card">
+    <mat-card-title-group>
+      <mat-card-title>{{ mySpace.codigo }}</mat-card-title>
+      <mat-card-subtitle>{{ mySpace.estado }}</mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+      {{ mySpace.descripcion }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" mat-raised-button routerLink="/space">Ok</button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->
+
+<h1 mat-dialog-title>
+  Espacio Cerrado: <b>{{ data.space.codigo }}</b>
+</h1>
+<div mat-dialog-content>
+  <h4>
+    Estado: <b>{{ data.space.estado ? "Activo" : "Inactivo" }}</b>
+  </h4>
+  <h4>
+    Descripcion:
+    <b>{{ data.space.descripcion }}</b>
+  </h4>
+</div>
+<mat-dialog-actions>
+  <button color="primary" mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>
