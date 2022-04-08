@@ -1,0 +1,74 @@
+<div class="supervisor">
+  <div class="supervisor-header">
+    <button
+      mat-raised-button
+      color="primary"
+      class="create-button"
+      routerLink="create"
+    >
+      Crear nuevo supervisor
+    </button>
+    <div class="search-supervisor">
+      <mat-form-field
+        appearance="outline"
+        class="search-form-field"
+        floatLabel="always"
+      >
+        <mat-label>Ingrese apellido de supervisor a buscar</mat-label>
+        <input
+          matInput
+          type="text"
+          name="filterPost"
+          [(ngModel)]="filterSupervisor"
+        />
+      </mat-form-field>
+      <!-- <button mat-raised-button color="primary" class="search-button" (click)="search()">
+        Buscar
+      </button> -->
+    </div>
+  </div>
+  <table
+    mat-table
+    [dataSource]="supervisores | filter: filterSupervisor"
+    class="mat-elevation-z8 supervisor-table"
+  >
+    <ng-container matColumnDef="Nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let supervisor">
+        {{ supervisor.nombre + " " + supervisor.apellido }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Correo">
+      <th mat-header-cell *matHeaderCellDef>Correo</th>
+      <td mat-cell *matCellDef="let supervisor">{{ supervisor.correo }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let supervisor">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openDialog(supervisor)"
+          class="detail-button"
+        >
+          Detalle
+        </button>
+        <button
+          class="btn-details"
+          mat-raised-button
+          (click)="goToEdit(supervisor)"
+        >
+          Editar
+        </button>
+        <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+          Eliminar
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<!-- (click)="goToDetail(supervisor)" -->
+<!-- routerLink="detail" -->

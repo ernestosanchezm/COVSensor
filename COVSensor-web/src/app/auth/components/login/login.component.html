@@ -1,0 +1,65 @@
+<div class="login-page">
+  <form [formGroup]="form">
+    <mat-card>
+      <mat-card-title>Iniciar Sesión</mat-card-title>
+      <mat-card-content>
+        <mat-form-field [hideRequiredMarker]="false" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          <div
+            class="messages"
+            *ngIf="emailField.touched && emailField.invalid"
+          >
+            <mat-error *ngIf="emailField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="emailField.hasError('email')">
+              No es un correo correcto
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            formControlName="password"
+          />
+          <mat-icon matSuffix>lock</mat-icon>
+          <div
+            class="messages"
+            *ngIf="passwordField.touched && passwordField.invalid"
+          >
+            <mat-error *ngIf="passwordField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="passwordField.hasError('minlength')">
+              Contraseña incorrecta
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-checkbox color="primary">Remember Me!</mat-checkbox>
+        <button
+          mat-raised-button
+          color="primary"
+          class="login-button"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Ingresar
+        </button>
+        <button routerLink="recover" mat-stroked-button color="primary" class="recover-button">
+          Olvidaste tu contraseña?
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+
