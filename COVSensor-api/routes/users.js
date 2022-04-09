@@ -6,8 +6,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 async function setup() {
-    console.log(process.env.ATLAS_URI)
-    return await main(process.env.ATLAS_URI).catch(handleFatalError);
+    console.log(process.env.DB_URI)
+    return await main(process.env.DB_URI).catch(handleFatalError);
 }
 
 function handleFatalError(err) {
@@ -35,7 +35,7 @@ router.route('/add').post(async (req, res) => {
     let body = req.body;
     let foundUser = await dao.storeUser.checkIfExists(body)
     if (foundUser == null) { //If user does not exist, we can create one
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
         psw = await bcrypt.hash(body.psw, salt);
         body.psw = psw
         dao.storeUser.add(body)
@@ -51,10 +51,9 @@ router.route('/add').post(async (req, res) => {
 router.post("/login", async (req, res) => {
     let dao = await setup()
     const body = req.body;
-    const foundUser = await dao.storeUser.checkIfExists(body)
-    if (foundUser == true) { //If user already exist, we can create one
-        const user = await dao.storeUser.getByUsernameAndPsw(body)
-        const validPassword = await bcrypt.compare(body.psw, user[0].psw);
+    const foundUser = await dao.storeUser.getByUsername(body)
+    if (foundUser) { //If user already exist, we can create one
+        const validPassword = await bcrypt.compare(body.psw, foundUser.psw);
         
         if (validPassword) { //If the password is valid, then return JWT
             const token = generateAccessToken({
@@ -80,7 +79,7 @@ router.put("/admin/update", async (req, res) => {
     let foundAdmin = await dao.storeUser.getAdminByUsername(body)
     if (foundAdmin) {
         body._id = foundAdmin._id
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
         psw = await bcrypt.hash(body.psw, salt);
         body.psw = psw
         await dao.storeUser.updateUser(body)
@@ -105,20 +104,17 @@ router.route("/supervisors").get(async (req, res) => {
 router.route('/supervisors/add').post(async (req, res) => {
     let dao = await setup()
     let body = req.body
-    let foundUser = await dao.storeUser.checkIfExists({
-        body
-    })
+    let foundUser = await dao.storeUser.checkIfExists(body)
+    console.log(foundUser)
     if (foundUser) {
         res.status(400).json('Error: Supervisor already exists.')
     } else {
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS) );
         body.psw = await bcrypt.hash(body.psw, salt);
         body.isAdmin = false
         console.log("body", body)
-        dao.storeUser.add({
-                body
-            })
-            .then(user => res.json(user))
+        dao.storeUser.add(body)
+            .then(() => res.status(201).json("Created Supervisor."))
             .catch(err => res.status(400).json('Error: ' + err))
     }
 })
