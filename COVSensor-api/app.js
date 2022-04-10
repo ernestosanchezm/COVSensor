@@ -11,8 +11,11 @@ app.use(cors());
 app.use(express.json());
 
 const usersRouter = require('./routes/users');
+const passwordRecoveryRouter = require('./routes/passwordReset')
 
 app.use('/users', usersRouter);
+
+app.use('/password-recovery', passwordRecoveryRouter);
 
 app.listen(port, () => {
     // perform a database connection when backend starts

@@ -1,4 +1,4 @@
-/*'use strict'
+'use strict'
 
 const setupDatabase = require('./lib/db') // creacion del singleton, para tener una sola instancia de base de datos
 const AirBombs_Sch = require('./Schemas/AirBombs') // creacion del modelo
@@ -30,4 +30,3 @@ module.exports = async function (accesDB) {
   storeAlarm
  }
 }
-*/

@@ -15,8 +15,8 @@ async function setup() {
   if (!answer.setup) {
     return console.log('No se realizo la acción :)')
   }
-  console.log(process.env.ATLAS_URI)
-  await main(process.env.ATLAS_URI).catch(handleFatalError)
+  console.log("DB_URI: ", process.env.DB_URI)
+  await main(process.env.DB_URI).catch(handleFatalError)
 }
 
 function handleFatalError(err) {

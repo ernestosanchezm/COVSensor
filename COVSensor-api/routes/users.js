@@ -3,6 +3,7 @@ const main = require('../../COVSensor-db/index')
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 async function setup() {
@@ -35,7 +36,7 @@ router.route('/add').post(async (req, res) => {
     let body = req.body;
     let foundUser = await dao.storeUser.checkIfExists(body)
     if (foundUser == null) { //If user does not exist, we can create one
-        const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
         psw = await bcrypt.hash(body.psw, salt);
         body.psw = psw
         dao.storeUser.add(body)
@@ -54,7 +55,7 @@ router.post("/login", async (req, res) => {
     const foundUser = await dao.storeUser.getByUsername(body)
     if (foundUser) { //If user already exist, we can create one
         const validPassword = await bcrypt.compare(body.psw, foundUser.psw);
-        
+
         if (validPassword) { //If the password is valid, then return JWT
             const token = generateAccessToken({
                 username: req.body.userName
@@ -79,7 +80,7 @@ router.put("/admin/update", async (req, res) => {
     let foundAdmin = await dao.storeUser.getAdminByUsername(body)
     if (foundAdmin) {
         body._id = foundAdmin._id
-        const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
         psw = await bcrypt.hash(body.psw, salt);
         body.psw = psw
         await dao.storeUser.updateUser(body)
@@ -109,10 +110,9 @@ router.route('/supervisors/add').post(async (req, res) => {
     if (foundUser) {
         res.status(400).json('Error: Supervisor already exists.')
     } else {
-        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS) );
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
         body.psw = await bcrypt.hash(body.psw, salt);
         body.isAdmin = false
-        console.log("body", body)
         dao.storeUser.add(body)
             .then(() => res.status(201).json("Created Supervisor."))
             .catch(err => res.status(400).json('Error: ' + err))
