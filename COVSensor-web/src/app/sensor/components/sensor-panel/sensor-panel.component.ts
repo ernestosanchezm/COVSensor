@@ -24,6 +24,8 @@ export class SensorPanelComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.sensors.filterPredicate = (data: any, filter: any) =>
+      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
     this.sensors.filter = filterValue.trim().toLowerCase();
   }
 

@@ -24,7 +24,9 @@ export class AirPanelComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.bombas.filter = filterValue.trim().toLowerCase();
+    this.bombas.filterPredicate = (data: any, filter: any) =>
+      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+    this.bombas.filter = filterValue.trim().toLocaleLowerCase();
   }
 
   ngOnInit(): void {}
