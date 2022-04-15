@@ -1,0 +1,24 @@
+{
+  "name": "covsensor-mqtt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "start-dev": "SET DEBUG=COVSensor:* && nodemon server.js",
+    "lint": "standard"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "standard": "^16.0.4"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "covsensor-db": "file:../COVSensor-db",
+    "debug": "^4.3.4",
+    "mosca": "^2.8.3",
+    "redis": "^4.0.6"
+  }
+}

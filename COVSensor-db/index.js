@@ -8,9 +8,8 @@ const Users_Sch = require('./Schemas/Users') // creacion del modelo
 const setupAirBomb = require('./lib/AirBombs') // crud de acceso a la base de datos
 const setupUsers = require('./lib/Users') // crud de acceso a la base de datos
 const setupAlarms = require('./lib/Alarms') // crud de acceso a la base de datos
+const setupArduino = require('./lib/Arduinos') // crud de acceso a la base de datos
 const defaults = require('defaults')
-
-const mongoose = require('mongoose')
 
 module.exports = async function (accesDB) {
   const connDB = await setupDatabase(accesDB)// INSTANCIA DE CONECCION
@@ -19,14 +18,17 @@ module.exports = async function (accesDB) {
   const AirBombModel = connDB.model('airBombs', AirBombs_Sch);
   const AlarmModel = connDB.model('alarms', Alarms_Sch);
   const UserModel=connDB.model('users', Users_Sch);
+  const ArduinoModel=connDB.model('arduinos',Arduinos_Sch);
 
   //SETEAR STORES
   const storeAirBomb = setupAirBomb(AirBombModel);  
   const storeAlarm = setupAlarms(AlarmModel);  
   const storeUser = setupUsers(UserModel);
+  const storeArduino = setupArduino(ArduinoModel);
  return {
   storeAirBomb,
   storeUser,
-  storeAlarm
+  storeAlarm,
+  storeArduino
  }
 }
