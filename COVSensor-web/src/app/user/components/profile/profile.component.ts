@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,17 +9,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-
   form: FormGroup;
 
   data = {
     name: 'Jorge Miguel',
     lastName: 'Curi Huaman',
     email: 'jorgeHuaman@gmail.com',
-    password: 'password'
-  }
+    password: 'password',
+  };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private location: Location) {
     this.buildForm();
     this.form.patchValue(this.data);
   }
@@ -34,19 +34,23 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  get nameField(){
+  get nameField() {
     return this.form.get('name');
   }
 
-  get lastNameField(){
+  get lastNameField() {
     return this.form.get('lastName');
   }
 
-  get emailField(){
+  get emailField() {
     return this.form.get('email');
   }
 
-  get passwordField(){
+  get passwordField() {
     return this.form.get('password');
+  }
+
+  goToBack() {
+    this.location.back();
   }
 }

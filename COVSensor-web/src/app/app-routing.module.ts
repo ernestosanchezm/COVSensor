@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NavComponent } from "./nav/nav.component";
+import { NavComponent } from './nav/nav.component';
 
 const routes: Routes = [
   {
@@ -10,42 +10,49 @@ const routes: Routes = [
     children: [
       {
         path: 'user',
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+        loadChildren: () =>
+          import('./user/user.module').then((m) => m.UserModule),
       },
       {
         path: 'supervisor',
-        loadChildren: () => import('./supervisor/supervisor.module').then(m => m.SupervisorModule)
+        loadChildren: () =>
+          import('./supervisor/supervisor.module').then(
+            (m) => m.SupervisorModule
+          ),
       },
       {
         path: 'space',
-        loadChildren: () => import('./space/space.module').then(m => m.SpaceModule)
+        loadChildren: () =>
+          import('./space/space.module').then((m) => m.SpaceModule),
       },
       {
         path: 'sensor',
-        loadChildren: () => import('./sensor/sensor.module').then(m => m.SensorModule)
+        loadChildren: () =>
+          import('./sensor/sensor.module').then((m) => m.SensorModule),
       },
       {
         path: 'air',
-        loadChildren: () => import('./air/air.module').then(m => m.AirModule)
+        loadChildren: () => import('./air/air.module').then((m) => m.AirModule),
       },
       {
         path: 'panel',
-        loadChildren: () => import('./panel/panel.module').then(m => m.PanelModule)
+        loadChildren: () =>
+          import('./panel/panel.module').then((m) => m.PanelModule),
       },
-    ]
+    ],
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

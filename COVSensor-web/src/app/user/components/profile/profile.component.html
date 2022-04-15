@@ -1,6 +1,9 @@
 <div class="user-page">
   <form [formGroup]="form">
     <mat-card class="mat-elevation-z1">
+      <button (click)="goToBack()" class="back-button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
       <mat-card-title>Perfil</mat-card-title>
       <mat-card-content>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
@@ -55,11 +58,7 @@
         >
           Actualizar información
         </button>
-        <button
-          mat-raised-button
-          color="primary"
-          class="close-button"
-        >
+        <button mat-raised-button color="primary" class="close-button">
           Cerrar Sesión
         </button>
       </mat-card-content>

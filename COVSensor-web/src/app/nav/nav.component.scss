@@ -4,16 +4,22 @@
 
 .sidenav {
   width: 200px;
+  background-color: #3f51b5;
 }
 
 .sidenav .mat-toolbar {
   background: inherit;
+  color: white;
 }
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 999;
+}
+
+.mat-list-item {
+  color: white;
 }
 
 .toolbar {
@@ -28,4 +34,9 @@
   gap: 0.5rem;
   text-decoration: none;
   color: white;
+  @media  screen and (max-width: 375px) {
+    span {
+      display: none; 
+    }
+  }
 }

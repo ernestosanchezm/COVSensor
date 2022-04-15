@@ -17,6 +17,8 @@ export class SpacePanelComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.spaces.filterPredicate = (data: any, filter: any) =>
+      data.codigo.toLocaleLowerCase().includes(filterValue);
     this.spaces.filter = filterValue.trim().toLowerCase();
   }
 
