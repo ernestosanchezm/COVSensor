@@ -1,28 +1,22 @@
-<!-- <div class="edit-section">
-  <mat-card class="example-card">
-    <mat-card-title-group>
-      <mat-card-title>{{ mySpace.codigo }}</mat-card-title>
-      <mat-card-subtitle>{{ mySpace.estado }}</mat-card-subtitle>
-    </mat-card-title-group>
-    <mat-card-content>
-      {{ mySpace.descripcion }}
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="primary" mat-raised-button routerLink="/space">Ok</button>
-    </mat-card-actions>
-  </mat-card>
-</div> -->
-
-<h1 mat-dialog-title>
-  Espacio Cerrado: <b>{{ data.space.codigo }}</b>
-</h1>
+<h1 mat-dialog-title>Espacio Cerrado</h1>
 <div mat-dialog-content>
   <h4>
-    Estado: <b>{{ data.space.estado ? "Activo" : "Inactivo" }}</b>
+    Codigo: <b>{{ data.space.codigo }}</b>
   </h4>
   <h4>
-    Descripcion:
-    <b>{{ data.space.descripcion }}</b>
+    Asignado: <b>{{ data.space.asignado ? "Asignado" : "No asignado" }}</b>
+  </h4>
+  <h4>
+    Descripcion: <b>{{ data.space.descripcion }}</b>
+  </h4>
+  <h4>
+    Sensor: <b>{{ data.sensor }}</b>
+  </h4>
+  <h4>
+    Bomba de Aire: <b>{{ data.air }}</b>
+  </h4>
+  <h4>
+    Alarma: <b>{{ data.alarm }}</b>
   </h4>
 </div>
 <mat-dialog-actions>

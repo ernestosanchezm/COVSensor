@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AirRegisterComponent } from './air-register.component';
+import { AlarmDetailComponent } from './alarm-detail.component';
 
-describe('AirRegisterComponent', () => {
-  let component: AirRegisterComponent;
-  let fixture: ComponentFixture<AirRegisterComponent>;
+describe('AlarmDetailComponent', () => {
+  let component: AlarmDetailComponent;
+  let fixture: ComponentFixture<AlarmDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AirRegisterComponent ]
+      declarations: [ AlarmDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AirRegisterComponent);
+    fixture = TestBed.createComponent(AlarmDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

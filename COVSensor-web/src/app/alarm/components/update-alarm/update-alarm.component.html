@@ -4,18 +4,8 @@
       <button (click)="goToBack()" class="back-button" mat-icon-button>
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <mat-card-title>Espacio Cerrado</mat-card-title>
+      <mat-card-title>Alarma</mat-card-title>
       <mat-card-content>
-        <mat-form-field appearance="fill">
-          <mat-label>Codigo</mat-label>
-          <input
-            matInput
-            placeholder="Codigo"
-            type="text"
-            formControlName="codigo"
-            readonly
-          />
-        </mat-form-field>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
           <mat-label>Descripcion</mat-label>
           <input
@@ -26,7 +16,9 @@
             readonly
           />
         </mat-form-field>
-        <mat-slide-toggle formControlName="asignado">Asignado</mat-slide-toggle>
+        <mat-slide-toggle formControlName="asignado" [disabled]="true">
+          Asignado
+        </mat-slide-toggle>
         <button
           mat-raised-button
           color="primary"

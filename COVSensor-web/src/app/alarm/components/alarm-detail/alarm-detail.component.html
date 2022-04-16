@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Alarma:</h1>
+<div mat-dialog-content>
+  <h4>
+    Codigo de Espacio Cerrado: <b>{{ data.alarm.codigoEspacioCerrado }}</b>
+  </h4>
+  <h4>
+    Asignado: <b>{{ data.alarm.asignado ? "Asignado" : "No asignado" }}</b>
+  </h4>
+  <h4>
+    Descripcion:
+    <b>{{ data.alarm.descripcion }}</b>
+  </h4>
+  <h4>
+    Codigo de Dispositivo:
+    <b>{{ data.alarm.codigoDispositivo }}</b>
+  </h4>
+</div>
+<mat-dialog-actions>
+  <button color="primary" mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>
