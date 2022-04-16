@@ -6,6 +6,7 @@ const main = require('./')
 require('dotenv').config() // variables globales
 
 async function setup () {  
+  console.log(process.env.DB_URI)
   return await main(process.env.DB_URI).catch(handleFatalError);
 }
 

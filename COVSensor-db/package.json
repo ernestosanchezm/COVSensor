@@ -1,12 +1,14 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.0.1",
     "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "dotenv": "^16.0.0",
     "inquirer": "^8.2.2",
-    "mongoose": "^6.2.8",
+    "mongoose": "^6.2.10",
+    "nodemon": "^2.0.15",
     "run-main": "^0.2.3"
   },
   "name": "covsensor-db",
