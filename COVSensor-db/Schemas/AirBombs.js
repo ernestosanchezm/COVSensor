@@ -6,7 +6,7 @@ const {
 module.exports = new Schema({
   id_Arduino:{
     type: Schema.Types.ObjectId,
-    ref: 'Arduinos',
+    ref: 'arduinos',
     required:true
   },
   status: {
