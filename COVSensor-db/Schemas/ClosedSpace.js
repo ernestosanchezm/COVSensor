@@ -7,5 +7,5 @@ module.exports = new Schema({
         ref: 'arduinos',
         unique:true 
     },
-    description: { type: String },    
+    description: { type: String },
 })

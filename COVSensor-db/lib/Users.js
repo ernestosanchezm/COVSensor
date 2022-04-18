@@ -13,11 +13,16 @@ module.exports = function setupUsers(UsersModel) {
       isAdmin: false
     });
   }
+// list Admin
+  function listAdmin() {
+    return UsersModel.find({
+      isAdmin: true
+    });
+  }
 
   function listAllUsers() {
     return UsersModel.find()
   }
-
 
   async function checkIfExists(_filterUser) {
     return UsersModel.findOne({
@@ -62,6 +67,33 @@ module.exports = function setupUsers(UsersModel) {
     return newUser;
   }
 
+  //-HU 7 - ACTUALIZAR SUPERVISOR --------------
+  function getSupervisorByUsername(_filterUser) {
+    return UsersModel.findOne({
+      userName: _filterUser.userName,
+      isAdmin: false
+    });
+  }
+
+  async function updateSupervisor(_user) {
+    const foundUser = await UsersModel.findOne({
+      _id: _user._id.valueOf()
+    });
+    foundUser.userName = _user.userName;
+    foundUser.name = _user.name;
+    foundUser.lastName = _user.lastName;
+    foundUser.eMail = _user.eMail;
+    foundUser.psw = _user.psw;
+    const newUser = await foundUser.save();
+    return newUser;
+  }
+
+  function getUserByUsername(_filterUser) {
+    return UsersModel.findOne({
+      userName: _filterUser
+    });
+  }
+
   return {
     add,
     listSupervisors,
@@ -70,6 +102,10 @@ module.exports = function setupUsers(UsersModel) {
     getByUsernameAndPsw,
     getByUsername,
     getAdminByUsername,
-    updateUser
+    updateUser,
+    updateSupervisor,
+    getSupervisorByUsername,
+    listAdmin,
+    getUserByUsername
   }
 }

@@ -3,6 +3,7 @@ const main = require('../../COVSensor-db/index')
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
+const { remove } = require('../../COVSensor-db/Schemas/AirBombs');
 
 dotenv.config();
 
@@ -101,6 +102,14 @@ router.route("/supervisors").get(async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+// Get Admin
+router.route("/admin").get(async (req, res) => {
+    let dao = await setup()
+    await dao.storeUser.listAdmin()
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
 // Add Supervisor 
 router.route('/supervisors/add').post(async (req, res) => {
     let dao = await setup()
@@ -118,5 +127,40 @@ router.route('/supervisors/add').post(async (req, res) => {
             .catch(err => res.status(400).json('Error: ' + err))
     }
 })
+
+// HU7 - Update supervisor
+router.put("/supervisors/update", async (req, res) => {
+    let dao = await setup()
+    let body = req.body;
+    let foundAdmin = await dao.storeUser.getSupervisorByUsername(body)
+    if (foundAdmin) {
+        body._id = foundAdmin._id
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
+        psw = await bcrypt.hash(body.psw, salt);
+        body.psw = psw
+        await dao.storeUser.updateSupervisor(body)
+            .then(() => res.json("Updated supervisor."))
+            .catch(err => res.status(400).json('Error: ' + err))
+    } else {
+        res.status(401).json({
+            error: "Supervisor does not exist"
+        });
+    }
+});
+
+//-HU 8 - Delete supervisor
+router.delete("/supervisors/:id", async (req, res) => {
+    let dao = await setup()
+    await res.json(dao.userStore.deleteSupervisorById(req.params.id))
+});
+
+// Get user by username
+router.get('/:username', async (req, res) => {
+    let dao = await setup()
+    const { username } = +req.params;
+    await dao.storeUser.getUserByUsername([username])
+        .then(res.json())
+        .catch(err => res.status(400).json('Error: ' + err))
+});
 
 module.exports = router;

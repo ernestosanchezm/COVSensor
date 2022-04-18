@@ -11,9 +11,11 @@ app.use(cors());
 app.use(express.json());
 
 const usersRouter = require('./routes/users');
-const passwordRecoveryRouter = require('./routes/passwordReset')
+const closedspaceRouter = require('./routes/closedspace');
+const passwordRecoveryRouter = require('./routes/passwordReset');
 
 app.use('/users', usersRouter);
+app.use('/closedspace', closedspaceRouter);
 
 app.use('/password-recovery', passwordRecoveryRouter);
 
