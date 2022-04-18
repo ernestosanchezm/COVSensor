@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Sensor:</h1>
+<h1 mat-dialog-title>Sensor coordinador:</h1>
 <div mat-dialog-content>
   <h4>
     Codigo de Espacio Cerrado: <b>{{ data.sensor.codigoEspacioCerrado }}</b>
@@ -9,6 +9,14 @@
   <h4>
     Descripcion:
     <b>{{ data.sensor.descripcion }}</b>
+  </h4>
+  <h4>
+    Bomba de aire:
+    <b>{{ data.air }}</b>
+  </h4>
+  <h4>
+    Alarma:
+    <b>{{ data.alarm }}</b>
   </h4>
 </div>
 <mat-dialog-actions>

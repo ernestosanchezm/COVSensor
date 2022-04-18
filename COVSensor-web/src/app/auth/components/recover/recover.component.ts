@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DialogComponent } from './../dialog/dialog.component';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-recover',
@@ -12,11 +13,13 @@ import { Location } from '@angular/common';
 })
 export class RecoverComponent implements OnInit {
   form: FormGroup;
+  isError = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private matDialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private auth: AuthService
   ) {
     this.buildForm();
   }
@@ -34,7 +37,25 @@ export class RecoverComponent implements OnInit {
   }
 
   openDialog() {
-    this.matDialog.open(DialogComponent);
+    const emailData = {
+      eMail: this.form.value.email,
+    };
+    this.auth.recoverPassword(emailData).subscribe(
+      (data) => {
+        if (data) {
+          console.log(data);
+          this.matDialog.open(DialogComponent);
+        }
+      },
+      (err) => {
+        if (err) {
+          this.isError = true;
+          setTimeout(() => {
+            this.isError = false;
+          }, 3000);
+        }
+      }
+    );
   }
 
   goToBack() {

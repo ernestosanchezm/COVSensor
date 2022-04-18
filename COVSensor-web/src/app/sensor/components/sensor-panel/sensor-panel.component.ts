@@ -53,6 +53,8 @@ export class SensorPanelComponent implements OnInit {
     this.dialog.open(SensorDetailComponent, {
       data: {
         sensor,
+        air: 'BA-1',
+        alarm: 'AL-1',
       },
     });
   }
