@@ -10,7 +10,7 @@ module.exports = new Schema({
     required:true
   },
   status: {
-    type: Number
+    type: String
   },
   description: {
     type: String

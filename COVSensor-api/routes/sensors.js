@@ -22,13 +22,13 @@ router.route("/").get(async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-/*router.route("/id").get(async (req, res) => {
+router.route("/:id").get(async (req, res) => {
     let dao = await setup()
-    let body = req.body;
-    await dao.storeSensor.getById(body)
+    const id = req.params.id
+    await dao.storeSensor.getById(id)
         .then(sensor => res.json(sensor))
-        .catch(err => res.status(400).json('Error: ' + err)
-})*/
+        .catch(err => res.status(400).json('Error: ' + err))
+})
 
 router.route('/add').post(async (req, res) => {
     let dao = await setup()
