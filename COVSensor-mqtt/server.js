@@ -38,6 +38,8 @@ server.on('ready',async () => {
   User=services.storeUser;
   Alarm=services.storeAlarm;
   Arduino=services.storeArduino;
+  AirBomb=services.storeAirBomb;
+  Sensor=services.storeSensor;
   console.log(`server is running`)
 })
 
