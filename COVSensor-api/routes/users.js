@@ -149,17 +149,33 @@ router.put("/supervisors/update", async (req, res) => {
 });
 
 //-HU 8 - Delete supervisor
-router.delete("/supervisors/:id", async (req, res) => {
+router.delete("/supervisors/:username", async (req, res) => {
     let dao = await setup()
-    await res.json(dao.userStore.deleteSupervisorById(req.params.id))
+    const parametro = req.params.username
+    try{
+        let parausername = await dao.storeUser.deleteSupervisorByUsername(parametro)
+        if(parausername) {
+            res.json({
+                estado: true,
+                mensaje:'Supervisor eliminado'
+            })
+        }else{
+            res.json({
+                estado: false,
+                mensaje:'fallo eliminar supervisor!'
+            })
+        }
+    }catch (error) {
+        res.status(400).json('Error: ' + err)
+    }
 });
 
-// Get user by username
+// Extra - Get user by username
 router.get('/:username', async (req, res) => {
     let dao = await setup()
-    const { username } = +req.params;
-    await dao.storeUser.getUserByUsername([username])
-        .then(res.json())
+    const parametro = req.params.username;
+    await dao.storeUser.getUserByUsername(parametro)
+        .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
