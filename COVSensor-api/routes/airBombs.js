@@ -22,6 +22,14 @@ router.route("/").get(async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+router.route("/:id").get(async (req, res) => {
+    let dao = await setup()
+    const id = req.params.id
+    await dao.storeAirBomb.getById(id)
+        .then(sensor => res.json(sensor))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
 router.route('/add').post(async (req, res) => {
     let dao = await setup()
     let body = req.body;
@@ -34,5 +42,21 @@ router.route('/add').post(async (req, res) => {
         res.status(400).json('Error: AirBomb already exists.')
     }
 })
+
+router.route("/update").put(async (req, res) => {
+    let dao = await setup()
+    let body = req.body;
+    let foundAirBomb = await dao.storeAirBomb.getById(body)
+    if(foundAirBomb) {
+        body._id = foundAirBomb._id
+        await dao.storeAirBomb.updateAirBomb(body)
+            .then(() => res.json("Updated airBomb."))
+            .catch(err => res.status(400).json('Error: ' +err))
+    } else {
+        res.status(401).json({
+            error: "AirBomb does not exist"
+        });
+    }
+});
 
 module.exports = router;
