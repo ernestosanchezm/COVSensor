@@ -31,11 +31,17 @@ module.exports = function setupAirBomb (AirBombModel) {
     return newAirBomb;
   }
 
+  function deleteAirBombById(_airBomb) {
+    return AirBombModel.deleteOne({
+      _airBomb: _id
+    });
+  }
   return {
     add,
     listAllAirBombs,
     checkIfExists,
     getById,
-    updateAirBomb
+    updateAirBomb,
+    deleteAirBombById
   }
 }

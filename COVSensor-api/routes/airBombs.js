@@ -59,4 +59,25 @@ router.route("/update").put(async (req, res) => {
     }
 });
 
+
+router.route("/:id").delete(async (req, res) => {
+    let dao = await setup()
+    const id = req.params.id
+    try {
+        let airBomb = await dao.storeAirBomb.deleteAirBombById(id)
+        if(airBomb) {
+            res.json({
+                estado: true,
+                mensaje: 'Sensor deleted'
+            })
+        } else {
+            res.json({
+                estado: false,
+                mensaje: 'Fail deleting Air Bomb'
+            })
+        }
+    } catch (error) {
+        res.status(400).json('Error: ' + err)
+    }
+})
 module.exports = router;

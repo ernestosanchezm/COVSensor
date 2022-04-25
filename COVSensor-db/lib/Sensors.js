@@ -31,11 +31,17 @@ module.exports = function setupSensor (SensorModel) {
     return newSensor;
   }
 
+  function deleteSensorById(_sensor) {
+    return SensorModel.deleteOne({
+      _sensor: _id
+    });
+  }
   return {
     add,
     listAllSensors,
     checkIfExists,
     getById,
-    updateSensor
+    updateSensor,
+    deleteSensorById
   }
 }
