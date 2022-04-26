@@ -16,9 +16,32 @@ module.exports = function setupAirBomb (AirBombModel) {
     })
   }
 
+  function getById(_filterAirBomb) {
+    return AirBombModel.findOne({
+      id: _filterAirBomb.id
+    });
+  }
+
+  async function updateAirBomb(_airBomb) {
+    const foundAirBomb = await AirBombModel.findOne({
+      _id: _airBomb._id.valueOf()
+    });
+    foundAirBomb.description = _airBomb.description;
+    const newAirBomb = await foundAirBomb.save();
+    return newAirBomb;
+  }
+
+  function deleteAirBombById(_airBomb) {
+    return AirBombModel.deleteOne({
+      _airBomb: _id
+    });
+  }
   return {
     add,
     listAllAirBombs,
-    checkIfExists
+    checkIfExists,
+    getById,
+    updateAirBomb,
+    deleteAirBombById
   }
 }

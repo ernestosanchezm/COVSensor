@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const main = require('../../COVSensor-db/index')
 const dotenv = require('dotenv');
+const { Router } = require('express');
 
 dotenv.config();
 
@@ -57,6 +58,27 @@ router.route("/update").put(async (req, res) => {
         res.status(401).json({
             error: "Sensor does not exist"
         });
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    let dao = await setup()
+    const id = req.params.id
+    try {
+        let sensor = await dao.storeSensor.deleteSensorById(id)
+        if(sensor) {
+            res.json({
+                estado: true,
+                mensaje: 'Sensor deleted'
+            })
+        } else {
+            res.json({
+                estado: false,
+                mensaje: "Fail deleting sensor"
+            })
+        }
+    } catch (error) {
+        res.status(400).json('Error: ' + err)
     }
 });
 
