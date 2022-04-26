@@ -5,12 +5,7 @@
       <mat-card-content>
         <mat-form-field [hideRequiredMarker]="false" appearance="outline">
           <mat-label>Email</mat-label>
-          <input
-            matInput
-            placeholder="Email"
-            type="email"
-            formControlName="email"
-          />
+          <input matInput placeholder="Email" formControlName="email" />
           <mat-icon matSuffix>email</mat-icon>
           <div
             class="messages"
@@ -45,21 +40,29 @@
             </mat-error>
           </div>
         </mat-form-field>
+        <span *ngIf="wrongCredentials" style="color: red">
+          Correo o contraseña equivocado, intentar nuevamente.
+        </span>
         <mat-checkbox color="primary">Remember Me!</mat-checkbox>
         <button
           mat-raised-button
           color="primary"
           class="login-button"
           type="submit"
+          (click)="login()"
           [disabled]="form.invalid"
         >
           Ingresar
         </button>
-        <button routerLink="recover" mat-stroked-button color="primary" class="recover-button">
+        <button
+          routerLink="recover"
+          mat-stroked-button
+          color="primary"
+          class="recover-button"
+        >
           Olvidaste tu contraseña?
         </button>
       </mat-card-content>
     </mat-card>
   </form>
 </div>
-

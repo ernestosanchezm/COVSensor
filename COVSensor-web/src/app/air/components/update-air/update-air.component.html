@@ -16,7 +16,9 @@
             readonly
           />
         </mat-form-field>
-        <mat-slide-toggle formControlName="estado">Estado</mat-slide-toggle>
+        <mat-slide-toggle formControlName="asignado" [disabled]="true">
+          Asignado
+        </mat-slide-toggle>
         <button
           mat-raised-button
           color="primary"

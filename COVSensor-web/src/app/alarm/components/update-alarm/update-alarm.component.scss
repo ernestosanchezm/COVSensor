@@ -1,5 +1,5 @@
 
-.supervisor-create {
+.update-page {
   top: 0;
   margin: 0;
   padding: 0;
@@ -12,6 +12,12 @@
 
 form {
   width: 100%;
+}
+
+.back-button {
+  position: absolute;
+  top: 3.5%;
+  left: 2%;
 }
 
 mat-card {
@@ -49,12 +55,6 @@ mat-form-field {
   margin: 20px auto;
   text-align: center;
   padding: 0;
-}
-
-.back-button {
-  position: absolute;
-  top: 3.5%;
-  left: 2%;
 }
 
 @media screen and (min-width: 481px) {

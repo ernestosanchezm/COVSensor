@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 
 @Component({
-  selector: 'app-update-air',
-  templateUrl: './update-air.component.html',
-  styleUrls: ['./update-air.component.scss'],
+  selector: 'app-update-alarm',
+  templateUrl: './update-alarm.component.html',
+  styleUrls: ['./update-alarm.component.scss'],
 })
-export class UpdateAirComponent implements OnInit {
+export class UpdateAlarmComponent implements OnInit {
   form: FormGroup;
 
   data = {
@@ -53,7 +53,7 @@ export class UpdateAirComponent implements OnInit {
   openDialog() {
     this.dialog.open(EditModalComponent, {
       data: {
-        titulo: 'Bomba de aire actualizada correctamente',
+        titulo: 'Alarma actualizada correctamente',
       },
     });
   }
