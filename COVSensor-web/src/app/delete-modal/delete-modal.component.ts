@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-delete-modal',
@@ -9,13 +9,19 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeleteModalComponent implements OnInit {
   constructor(
-    private location: Location,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
 
   delete() {
-    //TODO add delete
+    this.authService
+      .deleteSupervisor(this.data.supervisor._id)
+      .subscribe((data) => {
+        if (data) {
+          console.log('SUPERVISOR DELETED: ', data);
+        }
+      });
   }
 }

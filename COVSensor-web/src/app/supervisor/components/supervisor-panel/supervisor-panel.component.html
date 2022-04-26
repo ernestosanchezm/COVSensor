@@ -35,12 +35,12 @@
     <ng-container matColumnDef="Nombre">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
       <td mat-cell *matCellDef="let supervisor">
-        {{ supervisor.nombre + " " + supervisor.apellido }}
+        {{ supervisor.name + " " + supervisor.lastName }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Correo">
       <th mat-header-cell *matHeaderCellDef>Correo</th>
-      <td mat-cell *matCellDef="let supervisor">{{ supervisor.correo }}</td>
+      <td mat-cell *matCellDef="let supervisor">{{ supervisor.eMail }}</td>
     </ng-container>
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
@@ -60,7 +60,11 @@
         >
           Editar
         </button>
-        <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="openDeleteDialog(supervisor)"
+        >
           Eliminar
         </button>
       </td>

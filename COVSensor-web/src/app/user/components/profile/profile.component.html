@@ -34,7 +34,7 @@
             matInput
             placeholder="Email"
             type="email"
-            formControlName="email"
+            formControlName="eMail"
             readonly
           />
           <mat-icon matSuffix>email</mat-icon>
@@ -45,7 +45,7 @@
             matInput
             placeholder="Password"
             type="password"
-            formControlName="password"
+            formControlName="psw"
             readonly
           />
           <mat-icon matSuffix>lock</mat-icon>
@@ -54,7 +54,7 @@
           mat-raised-button
           color="primary"
           class="update-button"
-          routerLink="update"
+          (click)="goToDetail()"
         >
           Actualizar información
         </button>

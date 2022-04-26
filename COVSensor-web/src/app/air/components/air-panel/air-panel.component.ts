@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { AirbombService } from 'src/app/services/airbomb.service';
 import { AirDetailComponent } from '../air-detail/air-detail.component';
 
 @Component({
@@ -20,7 +21,17 @@ export class AirPanelComponent implements OnInit {
 
   filterSpace = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  bombas = null;
+
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private airBombService: AirbombService
+  ) {
+    this.airBombService.getAirBombs().subscribe((data) => {
+      this.bombas = new MatTableDataSource(data);
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -30,24 +41,6 @@ export class AirPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  bombas = new MatTableDataSource([
-    {
-      codigoEspacioCerrado: 'A-1',
-      asignado: false,
-      descripcion: 'Oficina Principal',
-    },
-    {
-      codigoEspacioCerrado: 'B-2',
-      asignado: true,
-      descripcion: 'Oficina Secundaria',
-    },
-    {
-      codigoEspacioCerrado: 'C-1',
-      asignado: true,
-      descripcion: 'Recepcion',
-    },
-  ]);
 
   openDialog(bombaAire: any) {
     this.dialog.open(AirDetailComponent, {

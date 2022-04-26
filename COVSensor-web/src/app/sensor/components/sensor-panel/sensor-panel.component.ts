@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { SensorService } from 'src/app/services/sensor.service';
 import { SensorDetailComponent } from '../sensor-detail/sensor-detail.component';
 
 @Component({
@@ -20,7 +21,19 @@ export class SensorPanelComponent implements OnInit {
 
   filterSpace = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  sensors = null;
+
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private sensorService: SensorService
+  ) {
+    this.sensorService.getSensors().subscribe((data) => {
+      if (data) {
+        this.sensors = new MatTableDataSource(data);
+      }
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -30,24 +43,6 @@ export class SensorPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  sensors = new MatTableDataSource([
-    {
-      codigoEspacioCerrado: 'A-1',
-      asignado: true,
-      descripcion: 'Oficina Principal',
-    },
-    {
-      codigoEspacioCerrado: 'B-2',
-      asignado: true,
-      descripcion: 'Oficina Secundaria',
-    },
-    {
-      codigoEspacioCerrado: 'C-1',
-      asignado: false,
-      descripcion: 'Recepcion',
-    },
-  ]);
 
   openDialog(sensor: any) {
     this.dialog.open(SensorDetailComponent, {

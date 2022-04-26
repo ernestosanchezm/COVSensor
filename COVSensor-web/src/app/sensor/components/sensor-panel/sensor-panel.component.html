@@ -22,19 +22,19 @@
     <ng-container matColumnDef="Codigo Espacio Cerrado">
       <th mat-header-cell *matHeaderCellDef>Codigo Espacio Cerrado</th>
       <td mat-cell *matCellDef="let sensor">
-        {{ sensor.codigoEspacioCerrado }}
+        {{ sensor.id_Arduino }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Asignado">
       <th mat-header-cell *matHeaderCellDef>Asignado</th>
       <td mat-cell *matCellDef="let sensor">
-        {{ sensor.asignado ? "Asignado" : "No asignado" }}
+        {{ sensor.status }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Descripcion">
       <th mat-header-cell *matHeaderCellDef>Descripcion</th>
       <td mat-cell *matCellDef="let sensor">
-        {{ sensor.descripcion }}
+        {{ sensor.description }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Acciones">

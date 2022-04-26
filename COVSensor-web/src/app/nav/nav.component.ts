@@ -31,14 +31,14 @@ export class NavComponent {
 
   ngOnInit(): void {
     if (this.isAuth) {
-      // this.authService.getUser(this.userName.username).subscribe(
-      //   (data) => {
-      //     this.user = data;
-      //   },
-      //   (err) => {
-      //     console.error(err);
-      //   }
-      // );
+      this.authService.getUser(this.userName.username).subscribe(
+        (data) => {
+          this.user = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
       this.router.navigateByUrl('/panel');
     } else {
       this.router.navigateByUrl('/home');

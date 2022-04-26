@@ -13,11 +13,10 @@
             placeholder="Nombres"
             type="text"
             formControlName="name"
-            readonly
           />
           <mat-icon matSuffix>account_circle</mat-icon>
           <div class="messages" *ngIf="nameField.touched && nameField.invalid">
-            <mat-error *ngIf="emailField.hasError('required')">
+            <mat-error *ngIf="eMailField.hasError('required')">
               Este campo es requerido
             </mat-error>
           </div>
@@ -29,7 +28,6 @@
             placeholder="Apellidos"
             type="text"
             formControlName="lastName"
-            readonly
           />
           <mat-icon matSuffix>account_circle</mat-icon>
           <div
@@ -47,18 +45,17 @@
             matInput
             placeholder="Email"
             type="email"
-            formControlName="email"
-            readonly
+            formControlName="eMail"
           />
           <mat-icon matSuffix>email</mat-icon>
           <div
             class="messages"
-            *ngIf="emailField.touched && emailField.invalid"
+            *ngIf="eMailField.touched && eMailField.invalid"
           >
-            <mat-error *ngIf="emailField.hasError('required')">
+            <mat-error *ngIf="eMailField.hasError('required')">
               Este campo es requerido
             </mat-error>
-            <mat-error *ngIf="emailField.hasError('email')">
+            <mat-error *ngIf="eMailField.hasError('eMail')">
               No es un correo correcto
             </mat-error>
           </div>
@@ -69,18 +66,14 @@
             matInput
             placeholder="Password"
             type="password"
-            formControlName="password"
-            readonly
+            formControlName="psw"
           />
           <mat-icon matSuffix>lock</mat-icon>
-          <div
-            class="messages"
-            *ngIf="passwordField.touched && passwordField.invalid"
-          >
-            <mat-error *ngIf="passwordField.hasError('required')">
+          <div class="messages" *ngIf="pswField.touched && pswField.invalid">
+            <mat-error *ngIf="pswField.hasError('required')">
               Este campo es requerido
             </mat-error>
-            <mat-error *ngIf="passwordField.hasError('minlength')">
+            <mat-error *ngIf="pswField.hasError('minlength')">
               Contraseña incorrecta
             </mat-error>
           </div>

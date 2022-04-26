@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>Sensor coordinador:</h1>
 <div mat-dialog-content>
   <h4>
-    Codigo de Espacio Cerrado: <b>{{ data.sensor.codigoEspacioCerrado }}</b>
+    Codigo de Espacio Cerrado: <b>{{ data.sensor.id_Arduino }}</b>
   </h4>
   <h4>
-    Asignado: <b>{{ data.sensor.asignado ? "Asignado" : "No asignado" }}</b>
+    Asignado: <b>{{ data.sensor.status }}</b>
   </h4>
   <h4>
     Descripcion:
-    <b>{{ data.sensor.descripcion }}</b>
+    <b>{{ data.sensor.description }}</b>
   </h4>
   <h4>
     Bomba de aire:

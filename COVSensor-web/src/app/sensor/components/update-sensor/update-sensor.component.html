@@ -12,8 +12,7 @@
             matInput
             placeholder="Descripcion"
             type="text"
-            formControlName="descripcion"
-            readonly
+            formControlName="description"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -28,7 +27,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-slide-toggle [disabled]="true" formControlName="asignado">
+        <mat-slide-toggle [disabled]="true" formControlName="status">
           Asignado
         </mat-slide-toggle>
         <button
