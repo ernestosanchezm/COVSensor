@@ -30,7 +30,7 @@ server.on('clientDisconnected', client => {
   debug(`Client Disconnected: ${client.id}`)
 })
 
-let User,Arduino,Alarm;   //stores de la base de datos
+let User,Arduino,Alarm,AirBomb,Sensor;   //stores de la base de datos
 const clients=new Map();
 
 server.on('ready',async () => {
@@ -45,8 +45,8 @@ server.on('ready',async () => {
 
 server.on('published', async (packet, client) => {
   debug(`Received: ${packet.topic}`)
-
-  switch (packet.topic) {
+  
+  switch (packet.topic) {    
     case 'metricsClosedSpace/connected':
     case 'metricsClosedSpace/disconnected':
       debug(`Payload: ${packet.payload}`)
@@ -54,34 +54,35 @@ server.on('published', async (packet, client) => {
     case 'metricsClosedSpace/message':
       debug(`Payload: ${packet.payload}`)
 
-      const payload = parsePayload(packet.payload)
-      console.log('ESTE ES LA DATA',payload)
+      //const payload = parsePayload(packet.payload)
+      
+      console.log('ESTE ES LA DATA',String(packet.payload))
 
-      if (payload) {
-        payload.connected = true;       
-        let arduino;
-        try {
-          arduino = await Arduino.createOrUpdate(payload)
-        } catch (e) {
-          return handleError(e)
-        }
+      // if (payload) {
+      //   payload.connected = true;       
+      //   let arduino;
+      //   try {
+      //     arduino = await Arduino.createOrUpdate(payload)
+      //   } catch (e) {
+      //     return handleError(e)
+      //   }
 
-        debug(`Arduino ${arduino._id} saved`)
+      //   debug(`Arduino ${arduino._id} saved`)
 
-        // Notify Agent is Connected
-        if (!clients.get(client.id)) {
-          clients.set(client.id, arduino)
-          server.publish({
-            topic: 'arduinos/connected',
-            payload: JSON.stringify({
-              "arduino": {
-                _id:arduino._id
-              }
-            })
-          })
-        }
-      }
-      break
+      //   // Notify Agent is Connected
+      //   if (!clients.get(client.id)) {
+      //     clients.set(client.id, arduino)
+      //     server.publish({
+      //       topic: 'arduinos/connected',
+      //       payload: JSON.stringify({
+      //         "arduino": {
+      //           _id:arduino._id
+      //         }
+      //       })
+      //     })
+      //   }
+      // }
+      break;   
   }
 })
 

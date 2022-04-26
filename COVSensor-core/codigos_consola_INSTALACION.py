@@ -17,3 +17,9 @@ sudo nano hbr.py
 git clone https://github.com/TMRh20/RF24
 
 
+
+/////////////////
+git clone https://github.com/eclipse/paho.mqtt.python 
+cd paho.mqtt.python 
+python3 setup.py install
+
