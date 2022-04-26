@@ -38,6 +38,15 @@ router.route('/').get(async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+//-HU 11 - Get Detail ClosedSpace by Id
+router.get('/:id', async (req, res) => {
+    let dao = await setup()
+    const parametro = req.params.id;
+    await dao.storeClosedSpace.getClosedSpaceById(parametro)
+        .then(closedSpace => res.json(closedSpace))
+        .catch(err => res.status(400).json('Error: ' + err))
+});
+
 //-HU 12 - Update ClosedSpace
 router.put("/update", async (req, res) => {
     let dao = await setup()

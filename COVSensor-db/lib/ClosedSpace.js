@@ -22,6 +22,13 @@ function listAllClosedSpace() {
   return ClosedSpaceModel.find();
 }
 
+//-HU 11 - Get Detail ClosedSpace by Id
+function getClosedSpaceById(_filterClosedSpace) {
+  return ClosedSpaceModel.findOne({
+    _id: _filterClosedSpace
+  });
+}
+
 //-HU 12 - Update ClosedSpace
 function getClosedSpaceByUsername(_filterClosedSpace) {
   return ClosedSpaceModel.findOne({
@@ -43,6 +50,7 @@ async function updateClosedSpace(_closedspace) {
     checkIfExistsClosedSpace,
     listAllClosedSpace,
     getClosedSpaceByUsername,
-    updateClosedSpace
+    updateClosedSpace,
+    getClosedSpaceById
   }
 }

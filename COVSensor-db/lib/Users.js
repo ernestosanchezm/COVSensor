@@ -67,7 +67,7 @@ module.exports = function setupUsers(UsersModel) {
     return newUser;
   }
 
-  //-HU 7 - ACTUALIZAR SUPERVISOR --------------
+  //-HU 7 - UPDATE SUPERVISOR --------------
   function getSupervisorByUsername(_filterUser) {
     return UsersModel.findOne({
       userName: _filterUser.userName,
@@ -87,10 +87,17 @@ module.exports = function setupUsers(UsersModel) {
     const newUser = await foundUser.save();
     return newUser;
   }
-
-  function getUserByUsername(_filterUser) {
+  //Extra - GET USER BY USERNAME
+  function getUserByUsername(_filterUserName) {
     return UsersModel.findOne({
-      userName: _filterUser
+      userName: _filterUserName
+    });
+  }
+
+  //-HU 8 - DELETE SUPERVISOR -----------------
+  function deleteSupervisorByUsername(_username) {
+    return UsersModel.deleteOne({
+      userName: _username
     });
   }
 
@@ -106,6 +113,7 @@ module.exports = function setupUsers(UsersModel) {
     updateSupervisor,
     getSupervisorByUsername,
     listAdmin,
+    deleteSupervisorByUsername,
     getUserByUsername
   }
 }
