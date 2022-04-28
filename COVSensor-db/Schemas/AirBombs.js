@@ -9,6 +9,7 @@ module.exports = new Schema({
     ref: 'arduinos',
     required:true
   },
+  description: { type: String },
   status: {
     type: String
   }
