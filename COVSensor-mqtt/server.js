@@ -43,20 +43,18 @@ server.on('ready',async () => {
   console.log(`server is running`)
 })
 
-server.on('published', async (packet, client) => {
-  debug(`Received: ${packet.topic}`)
-  
+server.on('published', async (packet, client) => {  
   switch (packet.topic) {    
-    case 'metricsClosedSpace/connected':
-    case 'metricsClosedSpace/disconnected':
+    case 'coordinator/connected':
+    case 'coordinator/disconnected':
       debug(`Payload: ${packet.payload}`)
       break
-    case 'metricsClosedSpace/message':
+    case 'coordinator/message':
       debug(`Payload: ${packet.payload}`)
 
       //const payload = parsePayload(packet.payload)
       
-      console.log('ESTE ES LA DATA',String(packet.payload))
+      console.log('ESTE ES LA DATA' + String(packet.payload))
 
       // if (payload) {
       //   payload.connected = true;       
@@ -69,19 +67,18 @@ server.on('published', async (packet, client) => {
 
       //   debug(`Arduino ${arduino._id} saved`)
 
-      //   // Notify Agent is Connected
-      //   if (!clients.get(client.id)) {
-      //     clients.set(client.id, arduino)
-      //     server.publish({
-      //       topic: 'arduinos/connected',
-      //       payload: JSON.stringify({
-      //         "arduino": {
-      //           _id:arduino._id
-      //         }
-      //       })
-      //     })
-      //   }
-      // }
+      // Notify Agent is Connected
+      if (!clients.get(client.id)) {
+        clients.set(client.id, "123")
+        server.publish({
+          topic: 'coordinator/connected',
+          payload: JSON.stringify({
+            "arduino": {
+              _id:"gg"
+            }
+          })
+        })
+      }
       break;   
   }
 })
