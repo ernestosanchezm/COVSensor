@@ -35,6 +35,7 @@ class COVSensorEmitter extends EventEmitter{
             this._client.subscribe('coordinator/message');
             this._client.subscribe('coordinator/disconnected');
             this._client.subscribe('coordinator/connected');
+            this._client.subscribe('coordinator/alarm');
 
             this._client.on('connect',()=>{
                 this._coordinatorId=uuid.v4();

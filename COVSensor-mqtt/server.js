@@ -32,6 +32,7 @@ server.on('clientDisconnected', client => {
 
 let User,Arduino,Alarm,AirBomb,Sensor;   //stores de la base de datos
 const clients=new Map();
+const datosVariables=new Map();
 
 server.on('ready',async () => {
   const services=await db("mongodb+srv://USER_COVSENSOR:123@cluster0.cbbrw.mongodb.net/covsensor-db?retryWrites=true&w=majority").catch(handleFatalError);
@@ -47,14 +48,15 @@ server.on('published', async (packet, client) => {
   switch (packet.topic) {    
     case 'coordinator/connected':
     case 'coordinator/disconnected':
-      debug(`Payload: ${packet.payload}`)
+      console.log(packet.payload);
       break
-    case 'coordinator/message':
-      debug(`Payload: ${packet.payload}`)
-
-      //const payload = parsePayload(packet.payload)
+    case 'coordinator/alarm/off':
+      console.log(String(packet.payload));
       
-      console.log('ESTE ES LA DATA' + String(packet.payload))
+      break;
+    case 'coordinator/message':
+      console.log(String(packet.payload));
+      //const payload = parsePayload(packet.payload)
 
       // if (payload) {
       //   payload.connected = true;       

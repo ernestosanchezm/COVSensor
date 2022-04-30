@@ -15,7 +15,6 @@ void setup(void){
   Serial.begin(9600);
   //printf_begin();
   radio.begin();
-
   radio.setPayloadSize(32);
   radio.setChannel(70);   //CANAL O FRECUENCIA DE LA TRANSFERENCIA 
   radio.setDataRate(RF24_2MBPS);
@@ -26,32 +25,15 @@ void setup(void){
    radio.openWritingPipe(0xF0F0F0F0E0LL);     //DIRECCION PARA ESCRIBIR AL COORDINADOR : TERMINAL-COORDINADOR 
   radio.powerUp();      
 }
-
-
 void loop(void){   
-  objMessage.metric=Get_Metric_Co2();  
-  
-  //bool ok=radio.write(char_MESSAGE_SEND,size_MESSAGE_SEND);    
+  objMessage.metric=Get_Metric_Co2();     
   bool ok=radio.write(&objMessage,sizeof(objMessage));    
   if (ok){
     Serial.println(objMessage.metric);  
     delay(10);
   }else{
     Serial.println("No enviado"+(String)objMessage.metric);  
-    }
-  
-//  if(Serial.available()>0){
-//    al=Serial.read();
-//    if(al==49){
-//      
-//      Serial.println(al);          
-//    }else if(al=48){
-//      radio.write(&text2,3);                     
-//      Serial.println(al); 
-//    }else{
-//      Serial.println(al);
-//    }
-//  }
+    }  
 delay(500);
 }
 
