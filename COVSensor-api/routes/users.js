@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const main = require('../../COVSensor-db/index')
+const main = require('../../COVSensor-db/index');
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { remove } = require('../../COVSensor-db/Schemas/AirBombs');
 
@@ -18,8 +18,8 @@ function handleFatalError(err) {
     process.exit(1)
 }
 
-function generateAccessToken(username) {
-    return jwt.sign(username, process.env.TOKEN_SECRET, {
+function generateAccessToken(email) {
+    return jwt.sign(email, process.env.TOKEN_SECRET, {
         expiresIn: '1800s'
     });
 }
@@ -49,19 +49,21 @@ router.route('/add').post(async (req, res) => {
     }
 })
 
-// login route ready
+//login route ready
 router.post("/login", async (req, res) => {
     let dao = await setup()
     const body = req.body;
-    const foundUser = await dao.storeUser.getByUsername(body)
-    if (foundUser) { //If user already exist, we can create one
-        const validPassword = await bcrypt.compare(body.psw, foundUser.psw);
-
+    const foundEmail = await dao.storeUser.getByEmail(body)
+    if (foundEmail) { //If user already exist, we can create one
+        const validPassword = await bcrypt.compare(body.psw, foundEmail.psw);
         if (validPassword) { //If the password is valid, then return JWT
             const token = generateAccessToken({
-                username: req.body.userName
+                email: req.body.eMail
             });
-            res.status(200).json(token)
+            res.status(200).json({
+                token,
+                message: "Valid password."
+            })
         } else {
             res.status(400).json({
                 error: "Invalid Password."
@@ -175,8 +177,49 @@ router.get('/:username', async (req, res) => {
     let dao = await setup()
     const parametro = req.params.username;
     await dao.storeUser.getUserByUsername(parametro)
-        .then(users => res.json(users))
+        .then(users => res.json({
+            userName:users.userName,
+            name:users.name,
+            lastName:users.lastName,
+            eMail:users.eMail,
+            isAdmin:users.isAdmin
+        }))
         .catch(err => res.status(400).json('Error: ' + err))
 });
+
+//Update Password
+router.post('/email', async (req, res) => {
+    let dao = await setup()
+    let body = req.body;
+    let foundEmail = await dao.storeUser.chekIfEmailExists(body)
+    if(foundEmail){
+        res.status(200).json({
+            message: "Valid Email"
+        });
+    } else {
+        res.status(400).json({
+            error: "Invalid Email."
+        });
+    }
+})
+
+router.put("/password/update", async (req, res) => {
+    let dao = await setup()
+    let body = req.body;
+    let foundEmail = await dao.storeUser.chekIfEmailExists(body)
+    if (foundEmail) {
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
+        psw = await bcrypt.hash(body.psw, salt);
+        body.psw = psw
+        await dao.storeUser.updatePasswordr(body)
+            .then(() => res.json("Updated password."))
+            .catch(err => res.status(400).json('Error: ' + err))
+    } else {
+        res.status(401).json({
+            error: "Updated not password"
+        });
+    }
+});
+
 
 module.exports = router;

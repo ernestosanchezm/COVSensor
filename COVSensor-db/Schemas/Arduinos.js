@@ -17,6 +17,7 @@ module.exports = new Schema({
     ref: 'alarms',
     required:false
   },
+  description: { type: String },
   coordinator: Boolean,
   connected:Boolean
 })
