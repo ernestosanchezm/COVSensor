@@ -34,6 +34,14 @@ module.exports = function setupUsers(UsersModel) {
     })
   }
 
+  async function chekIfEmailExists(_filterUser) {
+    return UsersModel.findOne({
+      $or: [{
+        eMail: _filterUser.eMail
+      }]
+    })
+  }
+
   function getAdminByUsername(_filterUser) {
     return UsersModel.findOne({
       userName: _filterUser.userName,
@@ -41,9 +49,9 @@ module.exports = function setupUsers(UsersModel) {
     });
   }
 
-  function getByUsername(_filterUser) {
+  function getByEmail(_filterUser) {
     return UsersModel.findOne({
-      userName: _filterUser.userName,
+      eMail: _filterUser.eMail
     });
   }
 
@@ -87,6 +95,16 @@ module.exports = function setupUsers(UsersModel) {
     const newUser = await foundUser.save();
     return newUser;
   }
+
+  async function updatePasswordr(_user) {
+    const foundUser = await UsersModel.findOne({
+      eMail: _user.eMail.valueOf()
+    });
+    foundUser.psw = _user.psw;
+    const newUser = await foundUser.save();
+    return newUser;
+  }
+
   //Extra - GET USER BY USERNAME
   function getUserByUsername(_filterUserName) {
     return UsersModel.findOne({
@@ -106,11 +124,13 @@ module.exports = function setupUsers(UsersModel) {
     listSupervisors,
     listAllUsers,
     checkIfExists,
+    chekIfEmailExists,
     getByUsernameAndPsw,
-    getByUsername,
+    getByEmail,
     getAdminByUsername,
     updateUser,
     updateSupervisor,
+    updatePasswordr,
     getSupervisorByUsername,
     listAdmin,
     deleteSupervisorByUsername,
