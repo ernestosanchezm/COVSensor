@@ -27,6 +27,9 @@
       </button> -->
     </div>
   </div>
+  <div class="supervisor-header">
+    <mat-icon class="refresh-icon" (click)="getData()">refresh</mat-icon>
+  </div>
   <table
     mat-table
     [dataSource]="supervisores | filter: filterSupervisor"

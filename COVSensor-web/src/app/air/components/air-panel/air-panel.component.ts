@@ -13,7 +13,7 @@ import { AirDetailComponent } from '../air-detail/air-detail.component';
 })
 export class AirPanelComponent implements OnInit {
   displayedColumns: string[] = [
-    'Codigo Espacio Cerrado',
+    'Codigo Bombas Aire',
     'Asignado',
     'Descripcion',
     'Acciones',
@@ -36,11 +36,19 @@ export class AirPanelComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.bombas.filterPredicate = (data: any, filter: any) =>
-      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+      data._id.toLocaleLowerCase().includes(filterValue);
     this.bombas.filter = filterValue.trim().toLocaleLowerCase();
   }
 
   ngOnInit(): void {}
+
+  getData() {
+    this.airBombService.getAirBombs().subscribe((data) => {
+      if (data) {
+        this.bombas = data;
+      }
+    });
+  }
 
   openDialog(bombaAire: any) {
     this.dialog.open(AirDetailComponent, {
@@ -50,10 +58,11 @@ export class AirPanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(bombaAire: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Bomba de aire',
+        airBomb: bombaAire,
       },
     });
   }

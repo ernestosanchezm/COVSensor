@@ -61,14 +61,14 @@ export class UpdateAirComponent implements OnInit {
       ...this.form.value,
       status: this.form.value.status ? 'Asignado' : 'No Asignado',
     };
-    // console.log(airBombData);
     this.airBombService.updateAirBomb(airBombData).subscribe((data) => {
-      console.log(data);
-    });
-    this.dialog.open(EditModalComponent, {
-      data: {
-        titulo: 'Bomba de aire actualizada correctamente',
-      },
+      if (data) {
+        this.dialog.open(EditModalComponent, {
+          data: {
+            titulo: 'Bomba de aire actualizada correctamente',
+          },
+        });
+      }
     });
   }
 }

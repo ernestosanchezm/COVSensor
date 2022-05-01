@@ -13,7 +13,7 @@ import { SensorDetailComponent } from '../sensor-detail/sensor-detail.component'
 })
 export class SensorPanelComponent implements OnInit {
   displayedColumns: string[] = [
-    'Codigo Espacio Cerrado',
+    'Codigo Sensor Coordinador',
     'Asignado',
     'Descripcion',
     'Acciones',
@@ -38,11 +38,19 @@ export class SensorPanelComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.sensors.filterPredicate = (data: any, filter: any) =>
-      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+      data.id_Arduino.toLocaleLowerCase().includes(filterValue);
     this.sensors.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit(): void {}
+
+  getData() {
+    this.sensorService.getSensors().subscribe((data) => {
+      if (data) {
+        this.sensors = data;
+      }
+    });
+  }
 
   openDialog(sensor: any) {
     this.dialog.open(SensorDetailComponent, {
@@ -54,10 +62,11 @@ export class SensorPanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(sensor: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Sensor',
+        sensor: sensor,
       },
     });
   }

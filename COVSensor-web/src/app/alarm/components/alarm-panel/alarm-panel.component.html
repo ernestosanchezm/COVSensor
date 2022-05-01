@@ -14,15 +14,18 @@
       </button> -->
     </div>
   </div>
+  <div class="supervisor-header">
+    <mat-icon class="refresh-icon" (click)="getData()">refresh</mat-icon>
+  </div>
   <table
     mat-table
     [dataSource]="alarms"
     class="mat-elevation-z8 supervisor-table"
   >
-    <ng-container matColumnDef="Codigo Espacio Cerrado">
-      <th mat-header-cell *matHeaderCellDef>Codigo Espacio Cerrado</th>
+    <ng-container matColumnDef="Codigo Alarma">
+      <th mat-header-cell *matHeaderCellDef>Codigo Alarma</th>
       <td mat-cell *matCellDef="let alarm">
-        {{ alarm.codigoEspacioCerrado }}
+        {{ alarm._id }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Asignado">
@@ -35,12 +38,6 @@
       <th mat-header-cell *matHeaderCellDef>Descripcion</th>
       <td mat-cell *matCellDef="let alarm">
         {{ alarm.descripcion }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="Codigo de Dispositivo">
-      <th mat-header-cell *matHeaderCellDef>Codigo de Dispositivo</th>
-      <td mat-cell *matCellDef="let alarm">
-        {{ alarm.codigoDispositivo }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Acciones">
@@ -57,7 +54,11 @@
         <button class="btn-details" mat-raised-button (click)="goToEdit(alarm)">
           Editar
         </button>
-        <button mat-raised-button color="warn" (click)="openDeleteDialog()">
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="openDeleteDialog(alarm)"
+        >
           Eliminar
         </button>
       </td>

@@ -43,6 +43,14 @@ export class SupervisorPanelComponent implements OnInit {
   //   this.filterCriteria = this.filterSupervisor;
   // }
 
+  getData() {
+    this.authService.getSupervisors().subscribe((data) => {
+      if (data) {
+        this.supervisores = data;
+      }
+    });
+  }
+
   openDeleteDialog(supervisor: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {

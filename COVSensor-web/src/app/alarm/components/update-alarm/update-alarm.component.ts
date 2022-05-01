@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
+import { AlarmService } from 'src/app/services/alarm.service';
 
 @Component({
   selector: 'app-update-alarm',
@@ -20,11 +21,14 @@ export class UpdateAlarmComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private alarmService: AlarmService
   ) {
     this.buildForm();
+    const { navigationId, ...rest } = history.state;
     this.data = {
-      ...history.state,
+      ...rest,
+      status: rest.status === 'Asignado' ? true : false,
     };
     this.form.patchValue(this.data);
   }
@@ -33,6 +37,8 @@ export class UpdateAlarmComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
+      _id: [''],
+      id_Arduino: [''],
       descripcion: ['', [Validators.required]],
       asignado: [false, Validators.requiredTrue],
     });
@@ -51,10 +57,20 @@ export class UpdateAlarmComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(EditModalComponent, {
-      data: {
-        titulo: 'Alarma actualizada correctamente',
-      },
+    const { descripcion, asignado, ...rest } = this.form.value;
+    const alarm = {
+      ...rest,
+      description: descripcion,
+      status: asignado ? 'Asignado' : 'No Asignado',
+    };
+    this.alarmService.updateAlarms(alarm).subscribe((res) => {
+      if (res) {
+        this.dialog.open(EditModalComponent, {
+          data: {
+            titulo: 'Alarma actualizada correctamente',
+          },
+        });
+      }
     });
   }
 }

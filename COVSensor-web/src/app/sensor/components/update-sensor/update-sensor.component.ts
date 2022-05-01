@@ -32,9 +32,6 @@ export class UpdateSensorComponent implements OnInit {
       status: rest.status === 'Asignado' ? true : false,
     };
     this.form.patchValue(this.data);
-    this.closedspaceService.getClosedspace().subscribe((data) => {
-      this.spaces = data.map((d: any) => d._id);
-    });
   }
 
   ngOnInit(): void {}

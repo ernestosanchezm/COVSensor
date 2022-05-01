@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { ClosedspaceService } from 'src/app/services/closedspace.service';
 import { SpaceDetailComponent } from '../space-detail/space-detail.component';
 
 @Component({
@@ -11,43 +12,41 @@ import { SpaceDetailComponent } from '../space-detail/space-detail.component';
   styleUrls: ['./space-panel.component.scss'],
 })
 export class SpacePanelComponent implements OnInit {
-  displayedColumns: string[] = [
-    'Codigo',
-    'Descripcion',
-    'Asignado',
-    'Acciones',
-  ];
-
+  displayedColumns: string[] = ['Codigo', 'Descripcion', 'Acciones'];
+  spaces;
   filterSpace = '';
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.spaces.filterPredicate = (data: any, filter: any) =>
-      data.codigo.toLocaleLowerCase().includes(filterValue);
+      data.codigo.toLocaleLowerCase().includes(filterValue.toLowerCase());
     this.spaces.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor(private router: Router, public dialog: MatDialog) {}
-
-  spaces = new MatTableDataSource([
-    {
-      codigo: 'A-1',
-      descripcion: 'Oficina Principal',
-      asignado: true,
-    },
-    {
-      codigo: 'B-2',
-      descripcion: 'Oficina Secundaria',
-      asignado: false,
-    },
-    {
-      codigo: 'C-1',
-      descripcion: 'Recepcion',
-      asignado: true,
-    },
-  ]);
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private closedSpaceService: ClosedspaceService
+  ) {
+    this.closedSpaceService.getClosedspace().subscribe((res) => {
+      this.spaces = new MatTableDataSource(
+        res.map(({ description, ...res }) => ({
+          ...res,
+          descripcion: description,
+        }))
+      );
+    });
+  }
 
   ngOnInit(): void {}
+
+  getData() {
+    this.closedSpaceService.getClosedspace().subscribe((data) => {
+      if (data) {
+        this.spaces = data;
+      }
+    });
+  }
 
   openDialog(space: any) {
     this.dialog.open(SpaceDetailComponent, {
@@ -60,10 +59,11 @@ export class SpacePanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(closedSpace: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Espacio cerrado',
+        closedSpace,
       },
     });
   }
