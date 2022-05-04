@@ -81,6 +81,7 @@ router.delete("/:username", async (req, res) => {
             })
         }
     }catch (error) {
+        var err = new Error("Some error ocurred");
         res.status(400).json('Error: ' + err)
     }
 });

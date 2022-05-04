@@ -64,4 +64,37 @@ router.put("/update", async (req, res) => {
     }
 });
 
+//Delete ClosedSpace
+router.delete("/:_id", async (req, res) => {
+    let dao = await setup()
+    const parametro = req.params._id
+    try{
+        let parausername = await dao.storeClosedSpace.deleteClosedSpace(parametro)
+        if(parausername) {
+            res.json({
+                estado: true,
+                mensaje:'Deleted ClosedSpace'
+            })
+        }else{
+            res.json({
+                estado: false,
+                mensaje:'Error Deleted ClosedSpace!'
+            })
+        }
+    }catch (error) {
+        var err = new Error("Some error ocurred");
+        res.status(400).json('Error: ' + err)
+    }
+});
+
+router.get('/ardu/:id_arduino', async (req, res) => {
+    let dao = await setup()
+    const parametro = req.params.id_arduino;
+    console.log(parametro)
+    let body = await dao.storeClosedSpace.getClosedSpacebyArduino(parametro)
+    //console.log(body)
+        .then(data => res.json(data))
+        .catch(err => res.status(400).json('Error: ' + err))
+});
+
 module.exports = router;

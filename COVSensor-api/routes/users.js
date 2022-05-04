@@ -18,12 +18,6 @@ function handleFatalError(err) {
     process.exit(1)
 }
 
-function generateAccessToken(email) {
-    return jwt.sign(email, process.env.TOKEN_SECRET, {
-        expiresIn: '1800s'
-    });
-}
-
 router.route('/').get(async (req, res) => {
     let dao = await setup()
     await dao.storeUser.listAllUsers()
@@ -49,17 +43,17 @@ router.route('/add').post(async (req, res) => {
     }
 })
 
-//login route ready
-router.post("/login", async (req, res) => {
+//Logi VERSION 2 ready
+router.post('/login', async (req, res) => {
     let dao = await setup()
     const body = req.body;
     const foundEmail = await dao.storeUser.getByEmail(body)
-    if (foundEmail) { //If user already exist, we can create one
+    if (foundEmail) {
         const validPassword = await bcrypt.compare(body.psw, foundEmail.psw);
-        if (validPassword) { //If the password is valid, then return JWT
-            const token = generateAccessToken({
-                email: req.body.eMail
-            });
+        if (validPassword) {
+            const token = jwt.sign({
+                email: body.eMail
+            }, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
             res.status(200).json({
                 token,
                 message: "Valid password."
@@ -69,12 +63,12 @@ router.post("/login", async (req, res) => {
                 error: "Invalid Password."
             });
         }
-    } else {
+    }else {
         res.status(401).json({ //If user does not exist, the credentials are invalid
             error: "No user exists with those credentials."
         });
     }
-});
+})
 
 // Update admin route ready
 router.put("/admin/update", async (req, res) => {
@@ -168,6 +162,7 @@ router.delete("/supervisors/:username", async (req, res) => {
             })
         }
     }catch (error) {
+        var err = new Error("Some error ocurred");
         res.status(400).json('Error: ' + err)
     }
 });

@@ -45,12 +45,28 @@ async function updateClosedSpace(_closedspace) {
   return newClosedSpace;
 }
 
+//Delete ClosedSpace
+function deleteClosedSpace(_id_) {
+  return ClosedSpaceModel.deleteOne({
+    _id: _id_
+  });
+}
+
+//ClosedSpace was the arduino assigned
+function getClosedSpacebyArduino(_id_arduino) {
+    return ClosedSpaceModel.findOne({
+      id_Arduino: _id_arduino
+    });
+}
+
   return {
     add,
     checkIfExistsClosedSpace,
     listAllClosedSpace,
     getClosedSpaceByUsername,
     updateClosedSpace,
-    getClosedSpaceById
+    getClosedSpaceById,
+    deleteClosedSpace,
+    getClosedSpacebyArduino
   }
 }
