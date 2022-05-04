@@ -42,6 +42,7 @@ module.exports = function setupAlarm (AlarmModel) {
       id_Arduino: _alarms.id_Arduino.valueOf()
     });
     foundAlarms.status = _alarms.status;
+    foundAlarms.description = _alarms.description;
     const newAlarms = await foundAlarms.save();
     return newAlarms;
   }

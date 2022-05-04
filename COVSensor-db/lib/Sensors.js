@@ -31,7 +31,7 @@ module.exports = function setupSensor (SensorModel) {
     return newSensor;
   }
 
-  function deleteSensorById(_sensor) {
+  function deleteSensorById(_id) {
     return SensorModel.deleteOne({
       _sensor: _id
     });

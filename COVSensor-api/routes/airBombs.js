@@ -77,7 +77,7 @@ router.route("/:id").delete(async (req, res) => {
             })
         }
     } catch (error) {
-        res.status(400).json('Error: ' + err)
+        res.status(400).json('Error: ' + error)
     }
 })
 module.exports = router;

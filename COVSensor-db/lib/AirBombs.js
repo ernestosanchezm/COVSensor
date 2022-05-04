@@ -31,7 +31,7 @@ module.exports = function setupAirBomb (AirBombModel) {
     return newAirBomb;
   }
 
-  function deleteAirBombById(_airBomb) {
+  function deleteAirBombById(_id) {
     return AirBombModel.deleteOne({
       _airBomb: _id
     });
