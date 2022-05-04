@@ -52,7 +52,9 @@ server.on('published', async (packet, client) => {
       break
     case 'coordinator/alarm/off':
       console.log(String(packet.payload));
-      
+      break;
+    case 'coordinator/alarm/on':
+      console.log(String(packet.payload));
       break;
     case 'coordinator/message':
       console.log(String(packet.payload));
