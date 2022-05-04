@@ -69,12 +69,13 @@ export class UpdateSensorComponent implements OnInit {
     };
     // console.log(sensorData);
     this.sensorService.updateSensor(sensorData).subscribe((data) => {
-      console.log(data);
-    });
-    this.dialog.open(EditModalComponent, {
-      data: {
-        titulo: 'Sensor de CO2 actualizado correctamente',
-      },
+      if (data) {
+        this.dialog.open(EditModalComponent, {
+          data: {
+            titulo: 'Sensor de CO2 actualizado correctamente',
+          },
+        });
+      }
     });
   }
 

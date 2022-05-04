@@ -42,7 +42,7 @@ export class Co2ControlComponent implements OnInit {
 
   multi = [
     {
-      name: 'USA',
+      name: 'S-1',
       series: [
         {
           name: '1990',
@@ -54,7 +54,15 @@ export class Co2ControlComponent implements OnInit {
         },
         {
           name: '2011',
-          value: 311000000,
+          value: 511000000,
+        },
+        {
+          name: '2015',
+          value: 111000000,
+        },
+        {
+          name: '2021',
+          value: 211000000,
         },
       ],
     },
@@ -64,5 +72,20 @@ export class Co2ControlComponent implements OnInit {
 
   onSelect(event) {
     console.log(event);
+  }
+  generateRandom(min, max) {
+    // find diff
+    let difference = max - min;
+
+    // generate random number
+    let rand = Math.random();
+
+    // multiply with difference
+    rand = Math.floor(rand * difference);
+
+    // add with min value
+    rand = rand + min;
+
+    return rand;
   }
 }

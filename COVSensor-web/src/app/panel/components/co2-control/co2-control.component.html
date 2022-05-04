@@ -32,7 +32,7 @@
           <mat-option value="mes">Mes</mat-option>
         </mat-select>
       </mat-form-field>
-      <ngx-charts-area-chart-stacked
+      <ngx-charts-line-chart
         [view]="view"
         [scheme]="colorScheme"
         [legend]="legend"
@@ -46,7 +46,7 @@
         [results]="multi"
         (select)="onSelect($event)"
       >
-      </ngx-charts-area-chart-stacked>
+      </ngx-charts-line-chart>
     </div>
   </div>
 </div>
