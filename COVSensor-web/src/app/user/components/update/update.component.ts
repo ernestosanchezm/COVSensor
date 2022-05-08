@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateComponent } from './../dialog-update/dialog-update.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-update',
@@ -16,7 +17,8 @@ export class UpdateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private authService: AuthService
   ) {
     this.buildForm();
   }
@@ -53,6 +55,14 @@ export class UpdateComponent implements OnInit {
   }
 
   openDialog() {
+    this.authService.updateAdmin(this.form.value).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
     this.matDialog.open(DialogUpdateComponent);
   }
 }

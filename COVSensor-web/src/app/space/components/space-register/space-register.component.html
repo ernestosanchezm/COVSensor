@@ -7,13 +7,29 @@
       <mat-card-title>Crear Espacio Cerrado</mat-card-title>
       <mat-card-content>
         <mat-form-field appearance="outline">
+          <mat-label>Codigo</mat-label>
+          <input
+            matInput
+            placeholder="Codigo"
+            type="text"
+            formControlName="codigo"
+          />
+          <div
+            class="messages"
+            *ngIf="codigoField.touched && codigoField.invalid"
+          >
+            <mat-error *ngIf="codigoField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Descripcion</mat-label>
           <input
             matInput
             placeholder="Descripcion"
             type="text"
             formControlName="descripcion"
-            readonly
           />
           <div
             class="messages"
@@ -24,20 +40,16 @@
             </mat-error>
           </div>
         </mat-form-field>
-        <mat-slide-toggle formControlName="estado">Estado</mat-slide-toggle>
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Estado</mat-label>
-          <mat-slide-toggle formControlName="estado"></mat-slide-toggle>
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <div
-            class="messages"
-            *ngIf="estadoField.touched && estadoField.invalid"
-          >
-            <mat-error *ngIf="estadoField.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-          </div>
-        </mat-form-field> -->
+        <mat-form-field appearance="outline">
+          <mat-label>Sensor coordinador</mat-label>
+          <mat-select formControlName="mySensor">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let sensor of sensores" [value]="sensor">
+              {{ sensor }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-slide-toggle formControlName="asignado">Asignado</mat-slide-toggle>
         <button
           mat-raised-button
           color="primary"

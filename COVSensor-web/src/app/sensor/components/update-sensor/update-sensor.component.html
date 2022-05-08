@@ -4,7 +4,7 @@
       <button (click)="goToBack()" class="back-button" mat-icon-button>
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <mat-card-title>Sensor</mat-card-title>
+      <mat-card-title>Sensor coordinador</mat-card-title>
       <mat-card-content>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
           <mat-label>Descripcion</mat-label>
@@ -16,7 +16,21 @@
             readonly
           />
         </mat-form-field>
-        <mat-slide-toggle formControlName="estado">Estado</mat-slide-toggle>
+        <mat-form-field appearance="outline">
+          <mat-label>Espacio Cerrado</mat-label>
+          <mat-select
+            formControlName="codigoEspacioCerrado"
+            [(value)]="form.value.codigoEspacioCerrado"
+          >
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let space of spaces" [value]="space">
+              {{ space }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-slide-toggle [disabled]="true" formControlName="asignado">
+          Asignado
+        </mat-slide-toggle>
         <button
           mat-raised-button
           color="primary"

@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 
 @Component({
@@ -13,16 +12,16 @@ import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 export class UpdateSensorComponent implements OnInit {
   form: FormGroup;
 
+  spaces: string[] = ['A-1', 'B-2', 'C-1'];
+
   data = {
     descripcion: '',
-    estado: false,
+    asignado: false,
   };
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private location: Location,
-    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog
   ) {
     this.buildForm();
@@ -37,7 +36,8 @@ export class UpdateSensorComponent implements OnInit {
   private buildForm() {
     this.form = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      estado: ['', Validators.requiredTrue],
+      asignado: [false, Validators.requiredTrue],
+      codigoEspacioCerrado: ['', Validators.required],
     });
   }
 
@@ -47,6 +47,10 @@ export class UpdateSensorComponent implements OnInit {
 
   get estadoField() {
     return this.form.get('estado');
+  }
+
+  get codigoEspacioCerradoField() {
+    return this.form.get('codigoEspacioCerrado');
   }
 
   openDialog() {

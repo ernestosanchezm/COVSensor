@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-supervisor-update',
@@ -25,7 +26,8 @@ export class SupervisorUpdateComponent implements OnInit {
     private router: Router,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {
     this.buildForm();
     this.data = {
@@ -69,6 +71,14 @@ export class SupervisorUpdateComponent implements OnInit {
   }
 
   openDialog() {
+    // this.authService.updateSupervisor(this.form.value).subscribe(
+    //   (data) => {
+    //     console.log(data);
+    //   },
+    //   (err) => {
+    //     console.error(err);
+    //   }
+    // );
     this.dialog.open(EditModalComponent, {
       data: {
         titulo: 'Cuenta actualizada correctamente',

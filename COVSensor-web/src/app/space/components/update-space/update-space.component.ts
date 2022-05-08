@@ -14,15 +14,14 @@ export class UpdateSpaceComponent implements OnInit {
   form: FormGroup;
 
   data = {
+    codigo: '',
     descripcion: '',
-    estado: false,
+    asignado: false,
   };
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private location: Location,
-    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog
   ) {
     this.buildForm();
@@ -37,7 +36,8 @@ export class UpdateSpaceComponent implements OnInit {
   private buildForm() {
     this.form = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      estado: ['', Validators.requiredTrue],
+      asignado: [false, Validators.requiredTrue],
+      codigo: [''],
     });
   }
 
@@ -45,8 +45,12 @@ export class UpdateSpaceComponent implements OnInit {
     return this.form.get('descripcion');
   }
 
-  get estadoField() {
-    return this.form.get('estado');
+  get asignadoField() {
+    return this.form.get('asignado');
+  }
+
+  get codigoField() {
+    return this.form.get('codigo');
   }
 
   goToBack() {

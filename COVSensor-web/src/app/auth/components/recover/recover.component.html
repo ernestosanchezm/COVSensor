@@ -26,6 +26,7 @@
             </mat-error>
           </div>
         </mat-form-field>
+        <span *ngIf="isError" style="color: red">El correo no existe.</span>
         <button
           mat-raised-button
           color="primary"
@@ -40,4 +41,3 @@
     </mat-card>
   </form>
 </div>
-

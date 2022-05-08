@@ -11,7 +11,12 @@ import { SpaceDetailComponent } from '../space-detail/space-detail.component';
   styleUrls: ['./space-panel.component.scss'],
 })
 export class SpacePanelComponent implements OnInit {
-  displayedColumns: string[] = ['Codigo', 'Descripcion', 'Estado', 'Acciones'];
+  displayedColumns: string[] = [
+    'Codigo',
+    'Descripcion',
+    'Asignado',
+    'Acciones',
+  ];
 
   filterSpace = '';
 
@@ -28,17 +33,17 @@ export class SpacePanelComponent implements OnInit {
     {
       codigo: 'A-1',
       descripcion: 'Oficina Principal',
-      estado: true,
+      asignado: true,
     },
     {
       codigo: 'B-2',
       descripcion: 'Oficina Secundaria',
-      estado: false,
+      asignado: false,
     },
     {
       codigo: 'C-1',
       descripcion: 'Recepcion',
-      estado: true,
+      asignado: true,
     },
   ]);
 
@@ -48,6 +53,9 @@ export class SpacePanelComponent implements OnInit {
     this.dialog.open(SpaceDetailComponent, {
       data: {
         space,
+        sensor: 'S-1',
+        air: 'A-1',
+        alarm: 'AL-1',
       },
     });
   }

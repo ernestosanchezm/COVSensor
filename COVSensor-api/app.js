@@ -14,11 +14,20 @@ const usersRouter = require('./routes/users');
 const closedspaceRouter = require('./routes/closedspace');
 const alarmsRouter = require('./routes/alarms');
 const passwordRecoveryRouter = require('./routes/passwordReset');
+const airBombRouter = require('./routes/airBombs');
+const sensorRouter = require ('./routes/sensors');
+
 
 app.use('/users', usersRouter);
 app.use('/closedspace', closedspaceRouter);
 app.use('/alarms', alarmsRouter);
 app.use('/password-recovery', passwordRecoveryRouter);
+
+app.use('/sensors', sensorRouter);
+
+app.use('/air-bombs', airBombRouter);
+
+app.use('/sensors', sensorRouter);
 
 app.listen(port, () => {
     // perform a database connection when backend starts

@@ -1,2 +1,0 @@
-mqtt pub -t 'agentmessage' -h localhost -m 'sadasdasdasdsadsad'
-npm install -g mqtt
