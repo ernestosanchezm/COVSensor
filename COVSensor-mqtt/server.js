@@ -72,17 +72,17 @@ server.on('published', async (packet, client) => {
       //   debug(`Arduino ${arduino._id} saved`)
 
       // Notify Agent is Connected
-      if (!clients.get(client.id)) {
-        clients.set(client.id, "123")
-        server.publish({
-          topic: 'coordinator/connected',
-          payload: JSON.stringify({
-            "arduino": {
-              _id:"gg"
-            }
-          })
-        })
-      }
+      // if (!clients.get(client.id)) {
+      //   clients.set(client.id, "123")
+      //   server.publish({
+      //     topic: 'coordinator/connected',
+      //     payload: JSON.stringify({
+      //       "arduino": {
+      //         _id:"gg"
+      //       }
+      //     })
+      //   })
+      // }
       break;   
   }
 })

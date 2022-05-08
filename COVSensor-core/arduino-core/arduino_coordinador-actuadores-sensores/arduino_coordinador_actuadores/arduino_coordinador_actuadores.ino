@@ -26,7 +26,7 @@ int initRead=0;
 int msgComplete=0;
 //---------------------------------------------------------------------------------
 void TurnOffAirBomb(){
-  Serial.print("APAGAR");
+  Serial.println("APAGAR BOMBA DE AIRE");
   digitalWrite(pinRelayBombAir,LOW);
 }
 float initTimer;

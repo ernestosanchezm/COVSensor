@@ -32,10 +32,11 @@ void setup(void){
 
 float sinVal;
 int toneVal;
-bool allowOnAlarm=1;
+int allowOnAlarm=1;
 bool allowOnBomb=1;
 float PARAM_CONCENTRATION=65000;
 float initTimer=0;
+char _sttAlarm;
 void loop(void){
   
   if (radio.available(&pipeNum)){ //ESCUCHAR A ESTE CANAL    
@@ -55,11 +56,9 @@ void loop(void){
         }
       }  
     }    
-    else if(pipeNum==3){  
-     
-      char _sttAlarm[1];
-      radio.read(_sttAlarm,radio.getDynamicPayloadSize());   
-      Serial.print((int)_sttAlarm[1]);     
+    else if(pipeNum==3){      
+      char _sttAlarm[0];
+      radio.read(_sttAlarm,radio.getDynamicPayloadSize());       
       allowOnAlarm=0;   
          
       }  
