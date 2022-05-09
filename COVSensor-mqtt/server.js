@@ -3,7 +3,7 @@
 const debug = require('debug')('COVSensor:mqtt')
 const mosca = require('mosca')
 const redis = require('redis')
-const db=require('COVSensor-db')
+const db=require('covsensor-db')
 const {parsePayload}=require('./utils')
 //inicializar bd
 
