@@ -84,3 +84,8 @@ void fnAlarm(){
   noTone(pinAlarm);
   return;
 }
+
+void ClearRadio(){
+  radio.flush_rx();
+  radio.flush_tx();
+}

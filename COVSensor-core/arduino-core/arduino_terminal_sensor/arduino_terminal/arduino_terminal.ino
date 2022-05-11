@@ -17,8 +17,8 @@ void setup(void){
   radio.begin();
   radio.setPayloadSize(32);
   radio.setChannel(70);   //CANAL O FRECUENCIA DE LA TRANSFERENCIA 
-  radio.setDataRate(RF24_2MBPS);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setDataRate(RF24_250KBPS);
+  radio.setPALevel(RF24_PA_MAX);
   radio.setAutoAck(true);
   radio.enableDynamicPayloads();   
   radio.enableAckPayload();
@@ -29,12 +29,14 @@ void loop(void){
   objMessage.metric=Get_Metric_Co2();     
   bool ok=radio.write(&objMessage,sizeof(objMessage));    
   if (ok){
-    Serial.println(objMessage.metric);  
+    //Serial.println(objMessage.metric); 
+    ClearRadio();  
     delay(10);
   }else{
     Serial.println("No enviado"+(String)objMessage.metric);  
     }  
-delay(500);
+    
+delay(1000);
 }
 
 
@@ -47,5 +49,8 @@ long Get_Metric_Co2(){
   METRIC_CO2= random(10000,70000); 
   return (long)METRIC_CO2;      
 }
-
+void ClearRadio(){
+  radio.flush_rx();
+  radio.flush_tx();
+}
 /////////////////////////////////////////////////////////

@@ -1,6 +1,7 @@
 #include <SPI.h>
 #include "RF24.h"
 #include <printf.h>
+#include <string.h>
 RF24 radio(7,8);
 //-----------------------------------CONSTANTES PARA EL SERIAL-------------------------------
 struct CMessage{
@@ -10,18 +11,40 @@ struct CMessage{
   int sttAlarm;
   CMessage(){}; 
 };
+class CMessageActuators{
+  public:
+  int sttAlarm;
+  int sttBombAir;  
+};
+    
+        
 
+        
 struct CMessage objMessage;
 uint8_t pipeNum;
+float sinVal;
+int toneVal;
+char messageActuatorRcvd[2]="";
+char allowOnAlarm[1];
+char allowOnBomb[1];
+float PARAM_CONCENTRATION=65000;
+float initTimer=0;
+char _sttAlarm;
+
 void setup(void){
+  allowOnAlarm[0]='1';
+  allowOnBomb[0]='1';
   Serial.begin(9600);
   //printf_begin();
   radio.begin();
-  pinMode(9, OUTPUT); // Definimos el pin 8 como salida.
+  //pinMode(9, OUTPUT); // Definimos el pin 8 como salida.
   radio.setPayloadSize(32);
   radio.setChannel(70);   //CANAL O FRECUENCIA DE LA TRANSFERENCIA 
-  radio.setDataRate(RF24_2MBPS); 
+  radio.setDataRate(RF24_250KBPS); 
+  radio.setPALevel(RF24_PA_MAX);
+   radio.setAutoAck(true);
   radio.enableDynamicPayloads();  
+   radio.enableAckPayload();
   radio.openReadingPipe(1, 0xF0F0F0F0E0LL);   //DIRECCION PARA ESCUCHAR AL TERMINAL: TERMINAL-COORDINADOR   
   radio.openWritingPipe(0xF0F0F0F0E1LL);      //DIRECCION PARA ESCRIBIR EN LA RPi4: COORDINADOR-RPi4
   radio.openReadingPipe(3, 0xF0F0F0F0E2LL);   //DIRECCION PARA ESCUCHAR AL TERMINAL: TERMINAL-COORDINADOR 
@@ -29,45 +52,38 @@ void setup(void){
   radio.startListening();
   radio.powerUp();     
 }
-
-float sinVal;
-int toneVal;
-int allowOnAlarm=1;
-bool allowOnBomb=1;
-float PARAM_CONCENTRATION=65000;
-float initTimer=0;
-char _sttAlarm;
-void loop(void){
+void loop(void){  
   
   if (radio.available(&pipeNum)){ //ESCUCHAR A ESTE CANAL    
-    if(pipeNum==1 && millis()-initTimer>300){
-      initTimer=millis();
-      radio.read(&objMessage,radio.getDynamicPayloadSize());   
+    //if(pipeNum==1 && millis()-initTimer>1000){
+    if(pipeNum==3){
+      ClearRadio();
+      radio.writeAckPayload(3, "7", 1);
+             
+      //messageActuatorRcvd[0]='9';
+      //messageActuatorRcvd[1]='8';
+      //radio.read(messageActuatorRcvd,radio.getDynamicPayloadSize());    
+      Serial.println("_11");        
+    }
+    if(pipeNum==1){
+      //initTimer=millis();
+      radio.read(&objMessage,radio.getDynamicPayloadSize()); 
+      ClearRadio();  
       if (ValidMetric(objMessage)){ 
         radio.stopListening();
-        bool ok=radio.write(&objMessage,sizeof(objMessage));            
+        bool ok=radio.write(&objMessage,sizeof(objMessage));                  
         radio.startListening();
+        ClearRadio(); 
         if(objMessage.metric>PARAM_CONCENTRATION){
-          String msg="_"+String(allowOnAlarm)+String(allowOnBomb);
-          Serial.println(msg);             
-        
-        }else{
-          //if(allowOnAlarm==1 || allowOnBomb==1) Serial.println("_00");              
+          //String msg="_"+String(allowOnAlarm[0])+String(allowOnBomb[0]);
+          //Serial.println(msg);
         }
       }  
     }    
-    else if(pipeNum==3){      
-      char _sttAlarm[0];
-      radio.read(_sttAlarm,radio.getDynamicPayloadSize());       
-      allowOnAlarm=0;   
-         
-      }  
-      radio.flush_rx();
-      radio.flush_tx();     
-        
+      
+    
+       
   }
-
-
 }
 
 int ValidMetric(CMessage _objMessage){
@@ -76,6 +92,10 @@ int ValidMetric(CMessage _objMessage){
   return 1;
 }
 
+void ClearRadio(){
+  radio.flush_rx();
+  radio.flush_tx();
+}
 //String StrReadSerial(){ 
 //  messageOfSerial="";   
 //  while(Serial.available()){
