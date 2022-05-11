@@ -2,8 +2,9 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
+import { ClosedspaceService } from 'src/app/services/closedspace.service';
+import { SensorService } from 'src/app/services/sensor.service';
 
 @Component({
   selector: 'app-update-space',
@@ -13,20 +14,25 @@ import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 export class UpdateSpaceComponent implements OnInit {
   form: FormGroup;
 
-  data = {
-    codigo: '',
-    descripcion: '',
-    asignado: false,
-  };
+  sensores = [];
+
+  data: any = {};
 
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private sensorService: SensorService,
+    private closedSpaceService: ClosedspaceService
   ) {
+    this.sensorService.getSensors().subscribe((res) => {
+      this.sensores = res.map((sensor) => sensor.id_Arduino);
+    });
     this.buildForm();
+    const { id_Arduino, ...rest } = history.state;
     this.data = {
-      ...history.state,
+      ...rest,
+      mySensor: history.state.id_Arduino,
     };
     this.form.patchValue(this.data);
   }
@@ -36,8 +42,8 @@ export class UpdateSpaceComponent implements OnInit {
   private buildForm() {
     this.form = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      asignado: [false, Validators.requiredTrue],
       codigo: [''],
+      mySensor: ['', Validators.required],
     });
   }
 
@@ -45,12 +51,12 @@ export class UpdateSpaceComponent implements OnInit {
     return this.form.get('descripcion');
   }
 
-  get asignadoField() {
-    return this.form.get('asignado');
-  }
-
   get codigoField() {
     return this.form.get('codigo');
+  }
+
+  get mySensorField() {
+    return this.form.get('mySensor');
   }
 
   goToBack() {
@@ -58,10 +64,20 @@ export class UpdateSpaceComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(EditModalComponent, {
-      data: {
-        titulo: 'Espacio cerrado actualizado correctamente',
-      },
-    });
+    const closedSpaceData = {
+      _id: this.data._id,
+      codigo: this.form.value.codigo,
+      description: this.form.value.descripcion,
+      id_Arduino: this.form.value.mySensor,
+    };
+    this.closedSpaceService
+      .updateClosedspace(closedSpaceData)
+      .subscribe((res) => {
+        this.dialog.open(EditModalComponent, {
+          data: {
+            titulo: 'Espacio cerrado actualizado correctamente',
+          },
+        });
+      });
   }
 }

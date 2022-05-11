@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AirDetailComponent } from 'src/app/air/components/air-detail/air-detail.component';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { AlarmService } from 'src/app/services/alarm.service';
 import { AlarmDetailComponent } from '../alarm-detail/alarm-detail.component';
 
 @Component({
@@ -13,46 +14,48 @@ import { AlarmDetailComponent } from '../alarm-detail/alarm-detail.component';
 })
 export class AlarmPanelComponent implements OnInit {
   displayedColumns: string[] = [
-    'Codigo Espacio Cerrado',
+    'Codigo Alarma',
     'Asignado',
     'Descripcion',
-    'Codigo de Dispositivo',
     'Acciones',
   ];
 
   filterSpace = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  alarms;
+
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private alarmService: AlarmService
+  ) {
+    this.alarmService.getAlarms().subscribe((res) => {
+      this.alarms = new MatTableDataSource(
+        res.map((alarm) => ({
+          ...alarm,
+          asignado: alarm.status,
+          descripcion: alarm.description,
+        }))
+      );
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.alarms.filterPredicate = (data: any, filter: any) =>
-      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+      data._id.toLocaleLowerCase().includes(filterValue.toLowerCase());
     this.alarms.filter = filterValue.trim().toLocaleLowerCase();
   }
 
   ngOnInit(): void {}
 
-  alarms = new MatTableDataSource([
-    {
-      codigoEspacioCerrado: 'A-1',
-      asignado: false,
-      descripcion: 'Oficina Principal',
-      codigoDispositivo: 'AL-1',
-    },
-    {
-      codigoEspacioCerrado: 'B-2',
-      asignado: true,
-      descripcion: 'Oficina Secundaria',
-      codigoDispositivo: 'AL-2',
-    },
-    {
-      codigoEspacioCerrado: 'C-1',
-      asignado: true,
-      descripcion: 'Recepcion',
-      codigoDispositivo: 'AL-3',
-    },
-  ]);
+  getData() {
+    this.alarmService.getAlarms().subscribe((data) => {
+      if (data) {
+        this.alarms = data;
+      }
+    });
+  }
 
   openDialog(alarm: any) {
     this.dialog.open(AlarmDetailComponent, {
@@ -62,10 +65,11 @@ export class AlarmPanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(alarm: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Alarma',
+        alarma: alarm,
       },
     });
   }

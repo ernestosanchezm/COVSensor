@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,13 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
   form: FormGroup;
-
-  data = {
-    name: 'Jorge Miguel',
-    lastName: 'Curi Huaman',
-    email: 'jorgeHuaman@gmail.com',
-    password: 'password',
-  };
+  fullUser = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,14 +22,17 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService
   ) {
     this.buildForm();
-    const user: any = localStorage.getItem('userName');
-    //TODO add getUser
-    // this.authService.getUser(user.username).subscribe((data) => {
-    //   this.form.patchValue(data)
-    // }, (err) => {
-    //   console.error(err)
-    // })
-    this.form.patchValue(this.data);
+    const user = localStorage.getItem('userName');
+    const username: any = jwtDecode(user);
+    this.authService.getUser(username.username).subscribe(
+      (data) => {
+        this.fullUser = data;
+        this.form.patchValue(data);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   ngOnInit(): void {}
@@ -43,8 +41,8 @@ export class ProfileComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      eMail: ['', [Validators.required, Validators.email]],
+      psw: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
 
@@ -71,5 +69,9 @@ export class ProfileComponent implements OnInit {
   logOut() {
     localStorage.removeItem('userName');
     this.router.navigateByUrl('/home');
+  }
+
+  goToDetail() {
+    this.router.navigateByUrl('/user/update', { state: this.fullUser });
   }
 }

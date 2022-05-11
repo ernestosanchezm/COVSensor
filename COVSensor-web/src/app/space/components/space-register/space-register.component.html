@@ -29,13 +29,13 @@
             matInput
             placeholder="Descripcion"
             type="text"
-            formControlName="descripcion"
+            formControlName="description"
           />
           <div
             class="messages"
-            *ngIf="descripcionField.touched && descripcionField.invalid"
+            *ngIf="descriptionField.touched && descriptionField.invalid"
           >
-            <mat-error *ngIf="descripcionField.hasError('required')">
+            <mat-error *ngIf="descriptionField.hasError('required')">
               Este campo es requerido
             </mat-error>
           </div>
@@ -49,7 +49,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-slide-toggle formControlName="asignado">Asignado</mat-slide-toggle>
         <button
           mat-raised-button
           color="primary"

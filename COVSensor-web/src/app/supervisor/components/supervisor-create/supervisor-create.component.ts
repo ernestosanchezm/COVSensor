@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateComponent } from './../dialog-update/dialog-update.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-supervisor-create',
@@ -16,7 +17,8 @@ export class SupervisorCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private authService: AuthService
   ) {
     this.buildForm();
   }
@@ -27,8 +29,8 @@ export class SupervisorCreateComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      eMail: ['', [Validators.required, Validators.email]],
+      psw: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
 
@@ -40,12 +42,12 @@ export class SupervisorCreateComponent implements OnInit {
     return this.form.get('lastName');
   }
 
-  get emailField() {
-    return this.form.get('email');
+  get eMailField() {
+    return this.form.get('eMail');
   }
 
-  get passwordField() {
-    return this.form.get('password');
+  get pswField() {
+    return this.form.get('psw');
   }
 
   goToBack() {
@@ -53,6 +55,15 @@ export class SupervisorCreateComponent implements OnInit {
   }
 
   openDialog() {
+    const newSupervisorData = {
+      ...this.form.value,
+      userName: this.form.value.name,
+    };
+    this.authService.createSupervisor(newSupervisorData).subscribe((data) => {
+      if (data) {
+        console.log('Supervisor: ', data);
+      }
+    });
     this.matDialog.open(DialogUpdateComponent);
   }
 }

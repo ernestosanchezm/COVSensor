@@ -13,7 +13,6 @@
             placeholder="Codigo"
             type="text"
             formControlName="codigo"
-            readonly
           />
         </mat-form-field>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
@@ -23,10 +22,17 @@
             placeholder="Descripcion"
             type="text"
             formControlName="descripcion"
-            readonly
           />
         </mat-form-field>
-        <mat-slide-toggle formControlName="asignado">Asignado</mat-slide-toggle>
+        <mat-form-field appearance="outline">
+          <mat-label>Sensor coordinador</mat-label>
+          <mat-select formControlName="mySensor">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let sensor of sensores" [value]="sensor">
+              {{ sensor }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <button
           mat-raised-button
           color="primary"

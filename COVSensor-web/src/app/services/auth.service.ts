@@ -38,4 +38,22 @@ export class AuthService {
       .put(`${environment.apiUrl}/users/supervisors/update`, supervisor)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  createSupervisor(supervisor: any): Observable<any> {
+    return this.http
+      .post(`${environment.apiUrl}/users/supervisors/add`, supervisor)
+      .pipe(catchError((e) => throwError(e)));
+  }
+
+  getSupervisors(): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/users/supervisors`)
+      .pipe(catchError((e) => throwError(e)));
+  }
+
+  deleteSupervisor(id: any): Observable<any> {
+    return this.http
+      .delete(`${environment.apiUrl}/users/supervisors/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

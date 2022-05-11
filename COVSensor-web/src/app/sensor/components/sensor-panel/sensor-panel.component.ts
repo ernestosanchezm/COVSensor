@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { SensorService } from 'src/app/services/sensor.service';
 import { SensorDetailComponent } from '../sensor-detail/sensor-detail.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { SensorDetailComponent } from '../sensor-detail/sensor-detail.component'
 })
 export class SensorPanelComponent implements OnInit {
   displayedColumns: string[] = [
-    'Codigo Espacio Cerrado',
+    'Codigo Sensor Coordinador',
     'Asignado',
     'Descripcion',
     'Acciones',
@@ -20,34 +21,36 @@ export class SensorPanelComponent implements OnInit {
 
   filterSpace = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  sensors = null;
+
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private sensorService: SensorService
+  ) {
+    this.sensorService.getSensors().subscribe((data) => {
+      if (data) {
+        this.sensors = new MatTableDataSource(data);
+      }
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.sensors.filterPredicate = (data: any, filter: any) =>
-      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+      data.id_Arduino.toLocaleLowerCase().includes(filterValue);
     this.sensors.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit(): void {}
 
-  sensors = new MatTableDataSource([
-    {
-      codigoEspacioCerrado: 'A-1',
-      asignado: true,
-      descripcion: 'Oficina Principal',
-    },
-    {
-      codigoEspacioCerrado: 'B-2',
-      asignado: true,
-      descripcion: 'Oficina Secundaria',
-    },
-    {
-      codigoEspacioCerrado: 'C-1',
-      asignado: false,
-      descripcion: 'Recepcion',
-    },
-  ]);
+  getData() {
+    this.sensorService.getSensors().subscribe((data) => {
+      if (data) {
+        this.sensors = data;
+      }
+    });
+  }
 
   openDialog(sensor: any) {
     this.dialog.open(SensorDetailComponent, {
@@ -59,10 +62,11 @@ export class SensorPanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(sensor: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Sensor',
+        sensor: sensor,
       },
     });
   }

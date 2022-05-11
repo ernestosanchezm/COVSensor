@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
+import { ClosedspaceService } from 'src/app/services/closedspace.service';
+import { SensorService } from 'src/app/services/sensor.service';
 import { DialogUpdateComponent } from 'src/app/user/components/dialog-update/dialog-update.component';
 
 @Component({
@@ -13,13 +15,18 @@ import { DialogUpdateComponent } from 'src/app/user/components/dialog-update/dia
 export class SpaceRegisterComponent implements OnInit {
   formControl: FormGroup;
 
-  sensores: string[] = ['S-1', 'S-2', 'S-3'];
+  sensores = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private closedSpaceService: ClosedspaceService,
+    private sensorService: SensorService
   ) {
+    this.sensorService.getSensors().subscribe((res) => {
+      this.sensores = res.map((sensor) => sensor.id_Arduino);
+    });
     this.buildForm();
   }
 
@@ -27,19 +34,14 @@ export class SpaceRegisterComponent implements OnInit {
 
   private buildForm() {
     this.formControl = this.formBuilder.group({
-      descripcion: ['', [Validators.required]],
-      asignado: [false, Validators.requiredTrue],
+      description: ['', [Validators.required]],
       codigo: ['', Validators.required],
       mySensor: ['', Validators.required],
     });
   }
 
-  get descripcionField() {
-    return this.formControl.get('descripcion');
-  }
-
-  get asignadoField() {
-    return this.formControl.get('asignado');
+  get descriptionField() {
+    return this.formControl.get('description');
   }
 
   get codigoField() {
@@ -55,10 +57,19 @@ export class SpaceRegisterComponent implements OnInit {
   }
 
   openDialog() {
-    this.matDialog.open(EditModalComponent, {
-      data: {
-        titulo: 'Espacio cerrado se ha creado correctamente',
-      },
-    });
+    const closedSpaceData = {
+      id_Arduino: this.formControl.value.mySensor,
+      codigo: this.formControl.value.codigo,
+      description: this.formControl.value.description,
+    };
+    this.closedSpaceService
+      .createClosedspace(closedSpaceData)
+      .subscribe((res) => {
+        this.matDialog.open(EditModalComponent, {
+          data: {
+            titulo: 'Espacio cerrado se ha creado correctamente',
+          },
+        });
+      });
   }
 }
