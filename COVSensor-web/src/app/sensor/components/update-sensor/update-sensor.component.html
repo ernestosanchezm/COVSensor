@@ -7,28 +7,37 @@
       <mat-card-title>Sensor coordinador</mat-card-title>
       <mat-card-content>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Codigo</mat-label>
+          <input
+            matInput
+            placeholder="Codigo"
+            type="text"
+            formControlName="id_Arduino"
+            readonly
+          />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-content>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
           <mat-label>Descripcion</mat-label>
           <input
             matInput
             placeholder="Descripcion"
             type="text"
-            formControlName="descripcion"
-            readonly
+            formControlName="description"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Espacio Cerrado</mat-label>
-          <mat-select
+          <input
+            matInput
+            placeholder="Codigo"
+            type="text"
             formControlName="codigoEspacioCerrado"
-            [(value)]="form.value.codigoEspacioCerrado"
-          >
-            <mat-option>None</mat-option>
-            <mat-option *ngFor="let space of spaces" [value]="space">
-              {{ space }}
-            </mat-option>
-          </mat-select>
+            readonly
+          />
         </mat-form-field>
-        <mat-slide-toggle [disabled]="true" formControlName="asignado">
+        <mat-slide-toggle [disabled]="true" formControlName="status">
           Asignado
         </mat-slide-toggle>
         <button

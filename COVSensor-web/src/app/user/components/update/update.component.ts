@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateComponent } from './../dialog-update/dialog-update.component';
 import { AuthService } from 'src/app/services/auth.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-update',
@@ -14,6 +15,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UpdateComponent implements OnInit {
   form: FormGroup;
 
+  data = {};
+
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
@@ -21,6 +24,16 @@ export class UpdateComponent implements OnInit {
     private authService: AuthService
   ) {
     this.buildForm();
+    const user = localStorage.getItem('userName');
+    const username: any = jwtDecode(user);
+    this.authService.getUser(username.username).subscribe(
+      (data) => {
+        this.form.patchValue(data);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   ngOnInit(): void {}
@@ -29,8 +42,8 @@ export class UpdateComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      eMail: ['', [Validators.required, Validators.email]],
+      psw: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
 
@@ -55,14 +68,23 @@ export class UpdateComponent implements OnInit {
   }
 
   openDialog() {
-    this.authService.updateAdmin(this.form.value).subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+    const updateUserData = {
+      ...history.state,
+      ...this.form.value,
+    };
+    if (updateUserData.isAdmin) {
+      this.authService.updateAdmin(updateUserData).subscribe((data) => {
+        if (data) {
+          console.log(data);
+        }
+      });
+    } else {
+      this.authService.updateSupervisor(updateUserData).subscribe((data) => {
+        if (data) {
+          console.log(data);
+        }
+      });
+    }
     this.matDialog.open(DialogUpdateComponent);
   }
 }

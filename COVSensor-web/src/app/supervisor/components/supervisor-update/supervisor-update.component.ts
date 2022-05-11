@@ -14,28 +14,17 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SupervisorUpdateComponent implements OnInit {
   form: FormGroup;
 
-  data = {
-    name: '',
-    lastName: '',
-    email: '',
-    password: 'password',
-  };
+  data = {};
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private location: Location,
-    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private authService: AuthService
   ) {
     this.buildForm();
-    this.data = {
-      name: history.state.nombre,
-      email: history.state.correo,
-      lastName: history.state.apellido,
-      password: 'password',
-    };
+    let { navigationId, ...rest } = history.state;
+    this.data = { ...rest };
     this.form.patchValue(this.data);
   }
 
@@ -45,8 +34,8 @@ export class SupervisorUpdateComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      eMail: ['', [Validators.required, Validators.email]],
+      psw: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
 
@@ -71,14 +60,18 @@ export class SupervisorUpdateComponent implements OnInit {
   }
 
   openDialog() {
-    // this.authService.updateSupervisor(this.form.value).subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //   },
-    //   (err) => {
-    //     console.error(err);
-    //   }
-    // );
+    const updateSupervisorData = {
+      ...this.data,
+      ...this.form.value,
+    };
+    this.authService.updateSupervisor(updateSupervisorData).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
     this.dialog.open(EditModalComponent, {
       data: {
         titulo: 'Cuenta actualizada correctamente',

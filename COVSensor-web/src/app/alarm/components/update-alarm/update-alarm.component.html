@@ -7,12 +7,31 @@
       <mat-card-title>Alarma</mat-card-title>
       <mat-card-content>
         <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Codigo</mat-label>
+          <input
+            matInput
+            placeholder="Codigo"
+            type="text"
+            formControlName="_id"
+            readonly
+          />
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
           <mat-label>Descripcion</mat-label>
           <input
             matInput
             placeholder="Descripcion"
             type="text"
             formControlName="descripcion"
+          />
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" appearance="outline">
+          <mat-label>Codigo Sensor coordinador</mat-label>
+          <input
+            matInput
+            placeholder="Codigo Sensor coordinador"
+            type="text"
+            formControlName="id_Arduino"
             readonly
           />
         </mat-form-field>

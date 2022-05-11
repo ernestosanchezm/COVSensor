@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { AirbombService } from 'src/app/services/airbomb.service';
 import { AirDetailComponent } from '../air-detail/air-detail.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { AirDetailComponent } from '../air-detail/air-detail.component';
 })
 export class AirPanelComponent implements OnInit {
   displayedColumns: string[] = [
-    'Codigo Espacio Cerrado',
+    'Codigo Bombas Aire',
     'Asignado',
     'Descripcion',
     'Acciones',
@@ -20,34 +21,34 @@ export class AirPanelComponent implements OnInit {
 
   filterSpace = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  bombas = null;
+
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private airBombService: AirbombService
+  ) {
+    this.airBombService.getAirBombs().subscribe((data) => {
+      this.bombas = new MatTableDataSource(data);
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.bombas.filterPredicate = (data: any, filter: any) =>
-      data.codigoEspacioCerrado.toLocaleLowerCase().includes(filterValue);
+      data._id.toLocaleLowerCase().includes(filterValue);
     this.bombas.filter = filterValue.trim().toLocaleLowerCase();
   }
 
   ngOnInit(): void {}
 
-  bombas = new MatTableDataSource([
-    {
-      codigoEspacioCerrado: 'A-1',
-      asignado: false,
-      descripcion: 'Oficina Principal',
-    },
-    {
-      codigoEspacioCerrado: 'B-2',
-      asignado: true,
-      descripcion: 'Oficina Secundaria',
-    },
-    {
-      codigoEspacioCerrado: 'C-1',
-      asignado: true,
-      descripcion: 'Recepcion',
-    },
-  ]);
+  getData() {
+    this.airBombService.getAirBombs().subscribe((data) => {
+      if (data) {
+        this.bombas = data;
+      }
+    });
+  }
 
   openDialog(bombaAire: any) {
     this.dialog.open(AirDetailComponent, {
@@ -57,10 +58,11 @@ export class AirPanelComponent implements OnInit {
     });
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(bombaAire: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Bomba de aire',
+        airBomb: bombaAire,
       },
     });
   }

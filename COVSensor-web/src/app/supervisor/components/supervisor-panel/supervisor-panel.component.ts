@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/delete-modal/delete-modal.component';
+import { AuthService } from 'src/app/services/auth.service';
 import { SupervisorDetailComponent } from '../supervisor-detail/supervisor-detail.component';
 
 @Component({
@@ -11,30 +12,22 @@ import { SupervisorDetailComponent } from '../supervisor-detail/supervisor-detai
 })
 export class SupervisorPanelComponent implements OnInit {
   displayedColumns: string[] = ['Nombre', 'Correo', 'Acciones'];
-
+  supervisores = [];
   filterSupervisor = '';
 
   // filterCriteria = '';
 
-  supervisores = [
-    {
-      nombre: 'Miguel',
-      apellido: 'Ore',
-      correo: 'miguel@correo.com',
-    },
-    {
-      nombre: 'Ayelen',
-      apellido: 'Quintana',
-      correo: 'ayelen@correo.com',
-    },
-    {
-      nombre: 'Walter',
-      apellido: 'Emanuel',
-      correo: 'walter@correo.com',
-    },
-  ];
-
-  constructor(private router: Router, public dialog: MatDialog) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
+    this.authService.getSupervisors().subscribe((data) => {
+      if (data) {
+        this.supervisores = data;
+      }
+    });
+  }
 
   openDialog(supervisor: any) {
     this.dialog.open(SupervisorDetailComponent, {
@@ -50,10 +43,19 @@ export class SupervisorPanelComponent implements OnInit {
   //   this.filterCriteria = this.filterSupervisor;
   // }
 
-  openDeleteDialog() {
+  getData() {
+    this.authService.getSupervisors().subscribe((data) => {
+      if (data) {
+        this.supervisores = data;
+      }
+    });
+  }
+
+  openDeleteDialog(supervisor: any) {
     this.dialog.open(DeleteModalComponent, {
       data: {
         item: 'Supervisor',
+        supervisor,
       },
     });
   }

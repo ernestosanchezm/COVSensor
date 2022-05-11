@@ -1,14 +1,17 @@
 <h1 mat-dialog-title>Bombas de Aire:</h1>
 <div mat-dialog-content>
   <h4>
-    Codigo de Espacio Cerrado: <b>{{ data.bombaAire.codigoEspacioCerrado }}</b>
+    Codigo de Bomba Aire: <b>{{ data.bombaAire._id }}</b>
   </h4>
   <h4>
-    Asignado: <b>{{ data.bombaAire.asignado ? "Asignado" : "No asignado" }}</b>
+    Codigo de Sensor coordinador: <b>{{ data.bombaAire.id_Arduino }}</b>
+  </h4>
+  <h4>
+    Asignado: <b>{{ data.bombaAire.status }}</b>
   </h4>
   <h4>
     Descripcion:
-    <b>{{ data.bombaAire.descripcion }}</b>
+    <b>{{ data.bombaAire.description }}</b>
   </h4>
 </div>
 <mat-dialog-actions>
