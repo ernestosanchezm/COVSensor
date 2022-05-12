@@ -58,7 +58,7 @@ server.on('published', async (packet, client) => {
       break;
     case 'coordinator/message':
       console.log(String(packet.payload));
-      //const payload = parsePayload(packet.payload)
+      const payload = parsePayload(packet.payload)
 
       // if (payload) {
       //   payload.connected = true;       

@@ -56,17 +56,8 @@ void loop(void){
   
   if (radio.available(&pipeNum)){ //ESCUCHAR A ESTE CANAL    
     //if(pipeNum==1 && millis()-initTimer>1000){
-    if(pipeNum==3){
-      ClearRadio();
-      radio.writeAckPayload(3, "7", 1);
-             
-      //messageActuatorRcvd[0]='9';
-      //messageActuatorRcvd[1]='8';
-      //radio.read(messageActuatorRcvd,radio.getDynamicPayloadSize());    
-      Serial.println("_11");        
-    }
-    if(pipeNum==1){
-      //initTimer=millis();
+    switch(pipeNum){
+      case 1:
       radio.read(&objMessage,radio.getDynamicPayloadSize()); 
       ClearRadio();  
       if (ValidMetric(objMessage)){ 
@@ -78,11 +69,18 @@ void loop(void){
           //String msg="_"+String(allowOnAlarm[0])+String(allowOnBomb[0]);
           //Serial.println(msg);
         }
-      }  
-    }    
-      
-    
-       
+      }
+      break;
+      case 3:
+      ClearRadio();
+      radio.writeAckPayload(3, "7", 1);
+             
+      //messageActuatorRcvd[0]='9';
+      //messageActuatorRcvd[1]='8';
+      //radio.read(messageActuatorRcvd,radio.getDynamicPayloadSize());    
+      Serial.println("_11"); 
+      break;
+    }           
   }
 }
 
