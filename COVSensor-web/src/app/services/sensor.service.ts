@@ -26,4 +26,10 @@ export class SensorService {
       .delete(`${environment.apiUrl}/sensors/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getSensorById(id: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/sensors/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

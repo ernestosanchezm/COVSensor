@@ -1,18 +1,17 @@
 <h1 mat-dialog-title>Alarma:</h1>
 <div mat-dialog-content>
   <h4>
-    Codigo de Espacio Cerrado: <b>{{ data.alarm.codigoEspacioCerrado }}</b>
+    Codigo de Alarma: <b>{{ data.alarm._id }}</b>
   </h4>
   <h4>
-    Asignado: <b>{{ data.alarm.asignado ? "Asignado" : "No asignado" }}</b>
+    Codigo de Sensor coordinador: <b>{{ data.alarm.id_Arduino }}</b>
+  </h4>
+  <h4>
+    Asignado: <b>{{ data.alarm.status }}</b>
   </h4>
   <h4>
     Descripcion:
-    <b>{{ data.alarm.descripcion }}</b>
-  </h4>
-  <h4>
-    Codigo de Dispositivo:
-    <b>{{ data.alarm.codigoDispositivo }}</b>
+    <b>{{ data.alarm.description }}</b>
   </h4>
 </div>
 <mat-dialog-actions>

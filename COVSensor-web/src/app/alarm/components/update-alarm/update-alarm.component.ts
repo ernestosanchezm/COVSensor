@@ -26,9 +26,10 @@ export class UpdateAlarmComponent implements OnInit {
   ) {
     this.buildForm();
     const { navigationId, ...rest } = history.state;
+    console.log('rest: ', rest);
     this.data = {
       ...rest,
-      status: rest.status === 'Asignado' ? true : false,
+      asignado: rest.status === 'Asignado' ? true : false,
     };
     this.form.patchValue(this.data);
   }
