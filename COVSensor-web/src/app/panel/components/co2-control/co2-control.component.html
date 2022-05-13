@@ -1,31 +1,62 @@
 <div class="control">
   <div class="control-container">
-    <div class="air-control-container">
-      <label class="air-label">Campos cerrados: </label>
-      <form [formGroup]="form">
-        <mat-form-field appearance="fill">
-          <mat-label>Bombas</mat-label>
-          <mat-select [formControl]="myBomba">
-            <mat-option>None</mat-option>
-            <mat-option *ngFor="let bomba of bombasAire" [value]="bomba">
-              {{ bomba }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+      "
+    >
+      <div>
+        <div class="air-control-container">
+          <label class="air-label">Campos cerrados: </label>
+          <form [formGroup]="form">
+            <mat-form-field appearance="fill">
+              <mat-label>Bombas</mat-label>
+              <mat-select [formControl]="myBomba">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let bomba of bombasAire" [value]="bomba">
+                  {{ bomba }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+        </div>
+
+        <div class="control-top">
+          <h1>C02 actual:</h1>
+          <div class="control-box">
+            <h1>{{ actual }} ppm</h1>
+          </div>
+        </div>
+      </div>
+
+      <ngx-charts-line-chart
+        [view]="view"
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+        (select)="onSelect($event)"
+      >
+      </ngx-charts-line-chart>
     </div>
 
-    <div class="control-top">
-      <h1>Promedio de CO2 actual:</h1>
-      <div class="control-box">
-        <h1>2168 ppm</h1>
-      </div>
-    </div>
     <h2 class="control-some-graph">Algunas graficas</h2>
     <div class="control-bot">
       <mat-form-field appearance="fill" class="select-container">
         <mat-label>Periodo</mat-label>
-        <mat-select [(value)]="informeSelected">
+        <mat-select
+          [(value)]="informeSelected"
+          (selectionChange)="getDateType()"
+        >
           <mat-option>None</mat-option>
           <mat-option value="dia">Dia</mat-option>
           <mat-option value="semana">Semana</mat-option>
@@ -43,7 +74,7 @@
         [xAxisLabel]="xAxisLabel"
         [yAxisLabel]="yAxisLabel"
         [timeline]="timeline"
-        [results]="multi"
+        [results]="multiDate"
         (select)="onSelect($event)"
       >
       </ngx-charts-line-chart>

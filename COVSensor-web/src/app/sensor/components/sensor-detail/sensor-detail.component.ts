@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ClosedspaceService } from 'src/app/services/closedspace.service';
 
 @Component({
   selector: 'app-sensor-detail',
@@ -7,11 +8,18 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./sensor-detail.component.scss'],
 })
 export class SensorDetailComponent implements OnInit {
-  mySensor;
+  closeSpace;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private closeSpaceService: ClosedspaceService
+  ) {}
 
   ngOnInit(): void {
-    this.mySensor = history.state;
+    this.closeSpaceService
+      .getByArduino(this.data.sensor.id_Arduino)
+      .subscribe((resCloseSpace) => {
+        this.closeSpace = resCloseSpace;
+      });
   }
 }

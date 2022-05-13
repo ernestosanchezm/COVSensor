@@ -26,4 +26,10 @@ export class AlarmService {
       .delete(`${environment.apiUrl}/alarms/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getAlarmById(id: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/alarms/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

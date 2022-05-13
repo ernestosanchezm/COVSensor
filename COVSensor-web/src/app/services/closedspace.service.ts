@@ -38,4 +38,10 @@ export class ClosedspaceService {
       .delete(`${environment.apiUrl}/closedspace/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getByArduino(idArduino: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/closedspace/ardu/${idArduino}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

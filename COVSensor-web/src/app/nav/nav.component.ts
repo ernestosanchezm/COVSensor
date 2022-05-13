@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  isAuth = localStorage.getItem('userName');
+  isAuth = localStorage.getItem('token');
   userName: any = jwt(this.isAuth);
   user = null;
 

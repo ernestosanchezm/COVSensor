@@ -15,6 +15,7 @@ export class UpdateSensorComponent implements OnInit {
   form: FormGroup;
 
   spaces = [];
+  closeSpace = null;
 
   data = {};
 
@@ -27,11 +28,16 @@ export class UpdateSensorComponent implements OnInit {
   ) {
     this.buildForm();
     const { navigationId, ...rest } = history.state;
-    this.data = {
-      ...rest,
-      status: rest.status === 'Asignado' ? true : false,
-    };
-    this.form.patchValue(this.data);
+    this.closedspaceService
+      .getByArduino(rest.id_Arduino)
+      .subscribe((resCloseSpace) => {
+        this.data = {
+          codigoEspacioCerrado: resCloseSpace.codigo,
+          ...rest,
+          status: rest.status === 'Asignado' ? true : false,
+        };
+        this.form.patchValue(this.data);
+      });
   }
 
   ngOnInit(): void {}

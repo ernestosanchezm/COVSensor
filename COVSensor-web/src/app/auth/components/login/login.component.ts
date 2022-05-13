@@ -44,12 +44,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     const userData = {
-      userName: this.form.value.email,
+      eMail: this.form.value.email,
       psw: this.form.value.password,
     };
     this.authService.loginUser(userData).subscribe(
       (data) => {
-        localStorage.setItem('userName', data);
+        console.log(data)
+        localStorage.setItem('token', data.token);
         this.router.navigateByUrl('/');
       },
       (err) => {

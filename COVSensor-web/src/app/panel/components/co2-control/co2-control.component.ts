@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { ConcentrationService } from 'src/app/services/concentration.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-co2-control',
@@ -12,6 +14,7 @@ export class Co2ControlComponent implements OnInit {
   informeSelected = '';
   myBomba = new FormControl('');
   bombasAire: string[] = ['Alabama', 'Alaska', 'Arizona'];
+  actual;
 
   view: [number, number] = [700, 300];
 
@@ -34,58 +37,84 @@ export class Co2ControlComponent implements OnInit {
     name: 'Customer Usage',
   };
 
-  constructor() {
+  counter = 2;
+
+  constructor(
+    private socketService: SocketService,
+    private concetrationService: ConcentrationService
+  ) {
     this.form = new FormGroup({
       myBomba: this.myBomba,
     });
+    this.multi = [
+      {
+        name: 'Data',
+        series: this.initData(),
+      },
+    ];
+    this.multiDate = [
+      {
+        name: 'Concentracion',
+        series: [],
+      },
+    ];
+    this.socketService.listenToServer('connect');
+    this.socketService.listenToServer('metrics').subscribe((data) => {
+      this.actual = data.metric;
+      this.addData(data);
+    });
   }
 
-  multi = [
-    {
-      name: 'S-1',
-      series: [
-        {
-          name: '1990',
-          value: 250000000,
-        },
-        {
-          name: '2010',
-          value: 309000000,
-        },
-        {
-          name: '2011',
-          value: 511000000,
-        },
-        {
-          name: '2015',
-          value: 111000000,
-        },
-        {
-          name: '2021',
-          value: 211000000,
-        },
-      ],
-    },
-  ];
+  multi = [];
+
+  multiDate = [];
 
   ngOnInit(): void {}
+
+  initData() {
+    const array = [];
+    for (let i = 0; i < 3; i++) {
+      array.push({
+        name: i.toString(),
+        value: 0,
+      });
+    }
+    return array;
+  }
+
+  addData(data: any) {
+    this.counter++;
+
+    this.multi[0].series.shift();
+    const dataX = {
+      name: this.counter.toString(),
+      value: data.metric,
+    };
+    this.multi[0].series.push(dataX);
+    this.multi = [...this.multi];
+  }
 
   onSelect(event) {
     console.log(event);
   }
-  generateRandom(min, max) {
-    // find diff
-    let difference = max - min;
 
-    // generate random number
-    let rand = Math.random();
-
-    // multiply with difference
-    rand = Math.floor(rand * difference);
-
-    // add with min value
-    rand = rand + min;
-
-    return rand;
+  getDateType() {
+    let count = 0;
+    this.concetrationService
+      .getConcentrationByDate(this.informeSelected)
+      .subscribe((data) => {
+        this.multiDate[0].series = [];
+        this.multiDate[0].name = this.informeSelected;
+        this.multiDate[0].series.shift();
+        data.forEach((d: any) => {
+          this.multiDate[0].series.push({
+            name: count,
+            value: d.value,
+          });
+          count++;
+        });
+        this.multiDate = [...this.multiDate];
+        console.log(this.multiDate);
+      });
   }
 }

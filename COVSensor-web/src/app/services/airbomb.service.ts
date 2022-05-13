@@ -26,4 +26,10 @@ export class AirbombService {
       .delete(`${environment.apiUrl}/air-bombs/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getAirBombById(id: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/air-bombs/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }
