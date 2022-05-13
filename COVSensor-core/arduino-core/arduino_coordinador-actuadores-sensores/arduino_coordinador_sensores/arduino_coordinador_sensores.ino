@@ -78,7 +78,7 @@ void loop(void){
       case 3:
       ClearRadio();
       radio.writeAckPayload(3, "7", 1);
-             
+      messageActuatorRcvd='F';       
 //      messageActuatorRcvd[0]='9';
 //      messageActuatorRcvd[1]='8';
       radio.read(&messageActuatorRcvd,radio.getDynamicPayloadSize());    
