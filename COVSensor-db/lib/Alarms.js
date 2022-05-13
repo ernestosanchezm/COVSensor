@@ -30,7 +30,7 @@ module.exports = function setupAlarm (AlarmModel) {
     });
   }
   
-  //-HU 24 - Update Alarms
+  //-HU 24, HU 31 - Update Alarms and Turn Off Alarm
   function getAlarmsByUsername(_filterAlarms) {
     return AlarmModel.findOne({
       id_Arduino: _filterAlarms.id_Arduino
