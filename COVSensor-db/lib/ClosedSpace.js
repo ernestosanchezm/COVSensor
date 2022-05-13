@@ -3,7 +3,6 @@
 module.exports = function setupClosedSpace(ClosedSpaceModel) {
 
   function add(_closedspace) {
-    console.log(_closedspace)
     const myClosedSpace = new ClosedSpaceModel(_closedspace);
     return myClosedSpace.save();
   }

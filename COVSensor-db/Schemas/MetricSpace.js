@@ -8,11 +8,12 @@ module.exports = new Schema({
     creatAt: { 
         type: Date,
          default: Date.now(),
-         require:false
+         require:true
         },
     id_ClosedSpace: {
         type: Schema.Types.ObjectId,
         ref: 'closedSpace',
-        required:false
+        required:true,
+        default:"626ac1be2cb9854d7462db10"
         },
 })

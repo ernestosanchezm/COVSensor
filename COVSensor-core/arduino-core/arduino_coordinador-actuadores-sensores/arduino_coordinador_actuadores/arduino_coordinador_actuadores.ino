@@ -2,15 +2,14 @@
 #include "RF24.h"
 #include <printf.h>
 #include <TimerOne.h>
-int ledPIN=2;
-void setup(void){
-  Serial.begin(9600); 
-  pinMode(8 , OUTPUT);
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(10,11); // RX, TX     //instancia de sensor
 
-}
+int ledPIN=2;
 //------------------------------------PIN------------------------------------
 int pinAlarm=4;
 int pinRelayBombAir=8;
+int pwmPin= 9;
 //---------------------------------------------------------------------------------
 //------------------------------------VARIABLES------------------------------------
 //ALARMA
@@ -24,13 +23,28 @@ char data[20];
 int size_data = 0;
 int initRead=0;
 int msgComplete=0;
+//--------SENSOR
+byte cmd[9] = {0xFF,0x01,0x86,0x00,0x00,0x00,0x00,0x00,0x79};
+unsigned char hexdata[9] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79}; 
+unsigned char response[9]; 
+unsigned long th, tl,ppm, ppm2, ppm3,pwmPPM = 0;
+
 //---------------------------------------------------------------------------------
 void TurnOffAirBomb(){
   Serial.println("APAGAR BOMBA DE AIRE");
   digitalWrite(pinRelayBombAir,LOW);
 }
 float initTimer;
-void loop(void){    
+
+void setup(void){
+  Serial.begin(9600); 
+  pinMode(8 , OUTPUT);
+  mySerial.begin(9600);   //inicializar SERIAL de 
+  pinMode(pwmPin, INPUT);
+}
+unsigned long log_cnt = 0;
+void loop(void){ 
+   //Serial.println(ReadCo2());
    if((millis()-initTimer)>2000 && initTimer!=0){
     TurnOffAirBomb();  
     initTimer=0;
@@ -45,8 +59,7 @@ void loop(void){
     }
 
     msgComplete=0;
-   }
-   
+   } 
 
 }
 
@@ -85,7 +98,23 @@ void fnAlarm(){
   return;
 }
 
-void ClearRadio(){
-  radio.flush_rx();
-  radio.flush_tx();
+
+
+unsigned long ReadCo2(){
+  mySerial.write(cmd,9);
+  mySerial.readBytes(response, 9);
+  unsigned int responseHigh = (unsigned int) response[2];
+  unsigned int responseLow = (unsigned int) response[3];
+  ppm = (256*responseHigh)+responseLow;
+
+
+  //CO2 via pwm
+  do {
+    th = pulseIn(pwmPin, HIGH, 1004000) / 1000;
+    tl = 1004 - th;
+    ppm2 = 2000 * (th-2)/(th+tl-4);
+    ppm3 = 5000 * (th-2)/(th+tl-4);
+  } while (th == 0);
+    
+  return th; 
 }

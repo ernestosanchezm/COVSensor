@@ -2,8 +2,9 @@
 #include "RF24.h"
 #include <printf.h>
 #include <string.h>
+
 RF24 radio(7,8);
-//-----------------------------------CONSTANTES PARA EL SERIAL-------------------------------
+//-----------------------------------CLASES-------------------------------
 struct CMessage{
   public:
   long metric;
@@ -16,26 +17,30 @@ class CMessageActuators{
   int sttAlarm;
   int sttBombAir;  
 };
-    
-        
-
-        
+            
 struct CMessage objMessage;
 uint8_t pipeNum;
+
+char messageActuatorRcvd;
+
+//----------------------------------VARIABLES-----------------
+
+//--------ALARMA
 float sinVal;
 int toneVal;
-char messageActuatorRcvd[2]="";
+//-------ACTUADORES
 char allowOnAlarm[1];
 char allowOnBomb[1];
-float PARAM_CONCENTRATION=65000;
+//-------PARAMETRO TOPE
+float PARAM_CONCENTRATION=400;
+//---------OTROS
 float initTimer=0;
-char _sttAlarm;
+
 
 void setup(void){
   allowOnAlarm[0]='1';
   allowOnBomb[0]='1';
   Serial.begin(9600);
-  //printf_begin();
   radio.begin();
   //pinMode(9, OUTPUT); // Definimos el pin 8 como salida.
   radio.setPayloadSize(32);
@@ -52,8 +57,7 @@ void setup(void){
   radio.startListening();
   radio.powerUp();     
 }
-void loop(void){  
-  
+void loop(void){    
   if (radio.available(&pipeNum)){ //ESCUCHAR A ESTE CANAL    
     //if(pipeNum==1 && millis()-initTimer>1000){
     switch(pipeNum){
@@ -75,10 +79,10 @@ void loop(void){
       ClearRadio();
       radio.writeAckPayload(3, "7", 1);
              
-      //messageActuatorRcvd[0]='9';
-      //messageActuatorRcvd[1]='8';
-      //radio.read(messageActuatorRcvd,radio.getDynamicPayloadSize());    
-      Serial.println("_11"); 
+//      messageActuatorRcvd[0]='9';
+//      messageActuatorRcvd[1]='8';
+      radio.read(&messageActuatorRcvd,radio.getDynamicPayloadSize());    
+      Serial.print(messageActuatorRcvd); 
       break;
     }           
   }
@@ -94,6 +98,7 @@ void ClearRadio(){
   radio.flush_rx();
   radio.flush_tx();
 }
+
 //String StrReadSerial(){ 
 //  messageOfSerial="";   
 //  while(Serial.available()){
