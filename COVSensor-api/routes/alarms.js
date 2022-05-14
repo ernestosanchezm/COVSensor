@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
-//-HU 24 - Update Alarms
+//-HU 24, HU 31 - Update Alarms and Turn Off Alarm
 router.put("/update", async (req, res) => {
     let dao = await setup()
     let body = req.body;

@@ -32,7 +32,11 @@ int toneVal;
 int allowOnAlarm=1;
 int allowOnBomb=1;
 //-------PARAMETRO TOPE
+<<<<<<< HEAD
 float PARAM_CONCENTRATION=500;
+=======
+float PARAM_CONCENTRATION=200;
+>>>>>>> dev/jesus
 //---------OTROS
 float initTimer=0;
 
