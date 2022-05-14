@@ -48,15 +48,17 @@ router.post('/login', async (req, res) => {
     let dao = await setup()
     const body = req.body;
     const foundEmail = await dao.storeUser.getByEmail(body)
+    console.log(foundEmail);
     if (foundEmail) {
         const validPassword = await bcrypt.compare(body.psw, foundEmail.psw);
         if (validPassword) {
             const token = jwt.sign({
-                email: body.eMail
+                email: foundEmail.userName
             }, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
             res.status(200).json({
                 token,
-                message: "Valid password."
+                message: "Valid password.",
+                userName: foundEmail.userName
             })
         } else {
             res.status(400).json({
