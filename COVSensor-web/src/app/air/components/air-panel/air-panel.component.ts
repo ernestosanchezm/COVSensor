@@ -13,7 +13,7 @@ import { AirDetailComponent } from '../air-detail/air-detail.component';
 export class AirPanelComponent implements OnInit {
   displayedColumns: string[] = [
     'Codigo Espacio Cerrado',
-    'Estado',
+    'Asignado',
     'Descripcion',
     'Acciones',
   ];
@@ -34,17 +34,17 @@ export class AirPanelComponent implements OnInit {
   bombas = new MatTableDataSource([
     {
       codigoEspacioCerrado: 'A-1',
-      estado: false,
+      asignado: false,
       descripcion: 'Oficina Principal',
     },
     {
       codigoEspacioCerrado: 'B-2',
-      estado: true,
+      asignado: true,
       descripcion: 'Oficina Secundaria',
     },
     {
       codigoEspacioCerrado: 'C-1',
-      estado: true,
+      asignado: true,
       descripcion: 'Recepcion',
     },
   ]);

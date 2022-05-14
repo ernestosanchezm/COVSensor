@@ -3,7 +3,7 @@
 const debug = require('debug')('COVSensor:mqtt')
 const mosca = require('mosca')
 const redis = require('redis')
-const db=require('COVSensor-db')
+const db=require('covsensor-db')
 const {parsePayload}=require('./utils')
 //inicializar bd
 
@@ -30,56 +30,66 @@ server.on('clientDisconnected', client => {
   debug(`Client Disconnected: ${client.id}`)
 })
 
-let User,Arduino,Alarm;   //stores de la base de datos
+let User,Arduino,Alarm,AirBomb,Sensor,MetricSpace;   //stores de la base de datos
 const clients=new Map();
+const datosVariables=new Map();
 
 server.on('ready',async () => {
   const services=await db("mongodb+srv://USER_COVSENSOR:123@cluster0.cbbrw.mongodb.net/covsensor-db?retryWrites=true&w=majority").catch(handleFatalError);
   User=services.storeUser;
   Alarm=services.storeAlarm;
   Arduino=services.storeArduino;
+  AirBomb=services.storeAirBomb;
+  Sensor=services.storeSensor;
+  MetricSpace=services.storeMetricSpace;
   console.log(`server is running`)
 })
 
-server.on('published', async (packet, client) => {
-  debug(`Received: ${packet.topic}`)
-
-  switch (packet.topic) {
-    case 'metricsClosedSpace/connected':
-    case 'metricsClosedSpace/disconnected':
-      debug(`Payload: ${packet.payload}`)
+server.on('published', async (packet, client) => {  
+  switch (packet.topic) {    
+    case 'coordinator/connected':
+    case 'coordinator/disconnected':
+      console.log(packet.payload);
       break
-    case 'metricsClosedSpace/message':
-      debug(`Payload: ${packet.payload}`)
-
+    case 'coordinator/airbomb/off':
+      console.log(String(packet.payload));
+      break;
+    case 'coordinator/airbomb/on':
+      console.log(String(packet.payload));
+      break;   
+    case 'coordinator/alarm/off':
+      console.log(String(packet.payload));
+      break;
+    case 'coordinator/alarm/on':
+      console.log(String(packet.payload));
+      break;
+    case 'coordinator/message':      
       const payload = parsePayload(packet.payload)
-      console.log('ESTE ES LA DATA',payload)
-
-      if (payload) {
-        payload.connected = true;       
-        let arduino;
+      console.log(payload.metric);
+          
+      if (payload) {           
+        
         try {
-          arduino = await Arduino.createOrUpdate(payload)
+          await MetricSpace.add({
+            value:payload.metric,      
+          });
         } catch (e) {
           return handleError(e)
         }
+      }    
 
-        debug(`Arduino ${arduino._id} saved`)
-
-        // Notify Agent is Connected
-        if (!clients.get(client.id)) {
-          clients.set(client.id, arduino)
-          server.publish({
-            topic: 'arduinos/connected',
-            payload: JSON.stringify({
-              "arduino": {
-                _id:arduino._id
-              }
-            })
-          })
-        }
-      }
-      break
+      // if (!clients.get(client.id)) {
+      //   clients.set(client.id, "123")
+      //   server.publish({
+      //     topic: 'coordinator/connected',
+      //     payload: JSON.stringify({
+      //       "arduino": {
+      //         _id:"gg"
+      //       }
+      //     })
+      //   })
+      // }
+      break;   
   }
 })
 

@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sensor-detail',
@@ -10,13 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SensorDetailComponent implements OnInit {
   mySensor;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    console.log(data);
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.mySensor = history.state;

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import jwt from 'jwt-decode';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  isAuth = true;
+  isAuth = localStorage.getItem('userName');
+  userName: any = jwt(this.isAuth);
+  user = null;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -22,11 +25,20 @@ export class NavComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     if (this.isAuth) {
+      // this.authService.getUser(this.userName.username).subscribe(
+      //   (data) => {
+      //     this.user = data;
+      //   },
+      //   (err) => {
+      //     console.error(err);
+      //   }
+      // );
       this.router.navigateByUrl('/panel');
     } else {
       this.router.navigateByUrl('/home');

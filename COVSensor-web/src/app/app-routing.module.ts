@@ -39,6 +39,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./panel/panel.module').then((m) => m.PanelModule),
       },
+      {
+        path: 'alarm',
+        loadChildren: () =>
+          import('./alarm/alarm.module').then((m) => m.AlarmModule),
+      },
     ],
   },
   {

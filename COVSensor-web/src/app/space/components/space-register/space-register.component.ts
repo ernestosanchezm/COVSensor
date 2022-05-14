@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 import { DialogUpdateComponent } from 'src/app/user/components/dialog-update/dialog-update.component';
 
 @Component({
@@ -11,6 +12,8 @@ import { DialogUpdateComponent } from 'src/app/user/components/dialog-update/dia
 })
 export class SpaceRegisterComponent implements OnInit {
   formControl: FormGroup;
+
+  sensores: string[] = ['S-1', 'S-2', 'S-3'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,7 +28,9 @@ export class SpaceRegisterComponent implements OnInit {
   private buildForm() {
     this.formControl = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      estado: ['', Validators.requiredTrue],
+      asignado: [false, Validators.requiredTrue],
+      codigo: ['', Validators.required],
+      mySensor: ['', Validators.required],
     });
   }
 
@@ -33,8 +38,16 @@ export class SpaceRegisterComponent implements OnInit {
     return this.formControl.get('descripcion');
   }
 
-  get estadoField() {
-    return this.formControl.get('estado');
+  get asignadoField() {
+    return this.formControl.get('asignado');
+  }
+
+  get codigoField() {
+    return this.formControl.get('codigo');
+  }
+
+  get mySensorField() {
+    return this.formControl.get('mySensor');
   }
 
   goToBack() {
@@ -42,6 +55,10 @@ export class SpaceRegisterComponent implements OnInit {
   }
 
   openDialog() {
-    this.matDialog.open(DialogUpdateComponent);
+    this.matDialog.open(EditModalComponent, {
+      data: {
+        titulo: 'Espacio cerrado se ha creado correctamente',
+      },
+    });
   }
 }

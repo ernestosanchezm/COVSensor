@@ -2,6 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +20,20 @@ export class ProfileComponent implements OnInit {
     password: 'password',
   };
 
-  constructor(private formBuilder: FormBuilder, private location: Location) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private location: Location,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.buildForm();
+    const user: any = localStorage.getItem('userName');
+    //TODO add getUser
+    // this.authService.getUser(user.username).subscribe((data) => {
+    //   this.form.patchValue(data)
+    // }, (err) => {
+    //   console.error(err)
+    // })
     this.form.patchValue(this.data);
   }
 
@@ -52,5 +66,10 @@ export class ProfileComponent implements OnInit {
 
   goToBack() {
     this.location.back();
+  }
+
+  logOut() {
+    localStorage.removeItem('userName');
+    this.router.navigateByUrl('/home');
   }
 }

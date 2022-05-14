@@ -4,8 +4,37 @@ module.exports = function setupAirBomb (AirBombModel) {
     const myAirBomb = new AirBombModel(_airBomb)
     return myAirBomb.save()
   }
-  function list () {
+  function listAllAirBombs () {
     return AirBombModel.find()
+  }
+  
+  async function checkIfExists(_filterAirBomb) {
+    return AirBombModel.findOne({
+      $or: [{
+        status: _filterAirBomb.status
+      }]
+    })
+  }
+
+  function getById(_filterAirBomb) {
+    return AirBombModel.findOne({
+      id: _filterAirBomb.id
+    });
+  }
+
+  async function updateAirBomb(_airBomb) {
+    const foundAirBomb = await AirBombModel.findOne({
+      _id: _airBomb._id.valueOf()
+    });
+    foundAirBomb.description = _airBomb.description;
+    const newAirBomb = await foundAirBomb.save();
+    return newAirBomb;
+  }
+
+  function deleteAirBombById(_airBomb) {
+    return AirBombModel.deleteOne({
+      _airBomb: _id
+    });
   }
 
   // HU27 - Get Status AirBomb by Id
@@ -40,10 +69,12 @@ function listAllAirBomb() {
 
   return {
     add,
-    list,
+    getById,
     getAirBombById,
     getAirBombByIdGadget,
     updateAirBomb,
-    listAllAirBomb
+    listAllAirBomb,
+    listAllAirBombs,
+    deleteAirBombById
   }
 }

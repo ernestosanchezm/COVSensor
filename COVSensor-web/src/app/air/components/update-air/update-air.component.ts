@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
 import { EditModalComponent } from 'src/app/edit-modal/edit-modal.component';
 
 @Component({
@@ -15,15 +14,13 @@ export class UpdateAirComponent implements OnInit {
 
   data = {
     descripcion: '',
-    estado: false,
+    asignado: false,
   };
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private location: Location,
-    private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) {
     this.buildForm();
     this.data = {
@@ -37,7 +34,7 @@ export class UpdateAirComponent implements OnInit {
   private buildForm() {
     this.form = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      estado: ['', Validators.requiredTrue],
+      asignado: [false, Validators.requiredTrue],
     });
   }
 

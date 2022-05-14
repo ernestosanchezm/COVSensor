@@ -15,9 +15,15 @@ import { MatListModule } from '@angular/material/list';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, EditModalComponent, DeleteModalComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    EditModalComponent,
+    DeleteModalComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,6 +36,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
     MatIconModule,
     MatListModule,
     MatDialogModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

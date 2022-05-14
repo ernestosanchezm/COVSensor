@@ -1,26 +1,12 @@
 <div class="supervisor">
   <div class="supervisor-header">
-    <button
-      mat-raised-button
-      color="primary"
-      class="create-button"
-      routerLink="create"
-    >
-      Crear nuevo Sensor
-    </button>
     <div class="search-supervisor">
       <mat-form-field
         appearance="outline"
         class="search-form-field"
         floatLabel="always"
       >
-        <mat-label>Ingrese codigo del sensor a buscar</mat-label>
-        <!-- <input
-          matInput
-          type="text"
-          name="filterSpace"
-          [(ngModel)]="filterSpace"
-        /> -->
+        <mat-label>Ingrese codigo del sensor coordinador a buscar</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input />
       </mat-form-field>
       <!-- <button mat-raised-button color="primary" class="search-button" (click)="search()">
@@ -39,10 +25,10 @@
         {{ sensor.codigoEspacioCerrado }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="Estado">
-      <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <ng-container matColumnDef="Asignado">
+      <th mat-header-cell *matHeaderCellDef>Asignado</th>
       <td mat-cell *matCellDef="let sensor">
-        {{ sensor.estado ? "Activo" : "Inactivo" }}
+        {{ sensor.asignado ? "Asignado" : "No asignado" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="Descripcion">

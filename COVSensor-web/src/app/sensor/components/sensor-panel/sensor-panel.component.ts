@@ -13,7 +13,7 @@ import { SensorDetailComponent } from '../sensor-detail/sensor-detail.component'
 export class SensorPanelComponent implements OnInit {
   displayedColumns: string[] = [
     'Codigo Espacio Cerrado',
-    'Estado',
+    'Asignado',
     'Descripcion',
     'Acciones',
   ];
@@ -34,17 +34,17 @@ export class SensorPanelComponent implements OnInit {
   sensors = new MatTableDataSource([
     {
       codigoEspacioCerrado: 'A-1',
-      estado: true,
+      asignado: true,
       descripcion: 'Oficina Principal',
     },
     {
       codigoEspacioCerrado: 'B-2',
-      estado: true,
+      asignado: true,
       descripcion: 'Oficina Secundaria',
     },
     {
       codigoEspacioCerrado: 'C-1',
-      estado: false,
+      asignado: false,
       descripcion: 'Recepcion',
     },
   ]);
@@ -53,6 +53,8 @@ export class SensorPanelComponent implements OnInit {
     this.dialog.open(SensorDetailComponent, {
       data: {
         sensor,
+        air: 'BA-1',
+        alarm: 'AL-1',
       },
     });
   }
