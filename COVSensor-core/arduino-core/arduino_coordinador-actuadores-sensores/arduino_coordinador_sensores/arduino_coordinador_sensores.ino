@@ -21,7 +21,7 @@ class CMessageActuators{
 struct CMessage objMessage;
 uint8_t pipeNum;
 
-char messageActuatorRcvd;
+int messageActuatorRcvd[1];
 
 //----------------------------------VARIABLES-----------------
 
@@ -29,17 +29,14 @@ char messageActuatorRcvd;
 float sinVal;
 int toneVal;
 //-------ACTUADORES
-char allowOnAlarm[1];
-char allowOnBomb[1];
+int allowOnAlarm=1;
+int allowOnBomb=1;
 //-------PARAMETRO TOPE
-float PARAM_CONCENTRATION=400;
+float PARAM_CONCENTRATION=500;
 //---------OTROS
 float initTimer=0;
 
-
 void setup(void){
-  allowOnAlarm[0]='1';
-  allowOnBomb[0]='1';
   Serial.begin(9600);
   radio.begin();
   //pinMode(9, OUTPUT); // Definimos el pin 8 como salida.
@@ -69,20 +66,34 @@ void loop(void){
         bool ok=radio.write(&objMessage,sizeof(objMessage));                  
         radio.startListening();
         ClearRadio(); 
+        Serial.print(objMessage.metric);
         if(objMessage.metric>PARAM_CONCENTRATION){
-          //String msg="_"+String(allowOnAlarm[0])+String(allowOnBomb[0]);
-          //Serial.println(msg);
+          String msg="_"+String(allowOnAlarm)+String(allowOnBomb);
+          Serial.println(msg);
         }
       }
       break;
       case 3:
       ClearRadio();
-      radio.writeAckPayload(3, "7", 1);
-      messageActuatorRcvd='F';       
+      radio.writeAckPayload(3, "7", 1);          
 //      messageActuatorRcvd[0]='9';
 //      messageActuatorRcvd[1]='8';
-      radio.read(&messageActuatorRcvd,radio.getDynamicPayloadSize());    
-      Serial.print(messageActuatorRcvd); 
+      radio.read(&messageActuatorRcvd,radio.getDynamicPayloadSize());   
+                  
+      switch(messageActuatorRcvd[0]){
+        case 0:
+        allowOnAlarm=0;
+        break;
+        case 1:
+        allowOnAlarm=1;
+        break;
+        case 2:
+        allowOnBomb=0;
+        break;
+        case 3:
+        allowOnBomb=1;
+        break;        
+      }   
       break;
     }           
   }
