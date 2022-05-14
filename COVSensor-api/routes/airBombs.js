@@ -15,6 +15,7 @@ function handleFatalError(err) {
     process.exit(1)
 }
 
+<<<<<<< HEAD
 router.route("/").get(async (req, res) => {
     let dao = await setup()
     await dao.storeAirBomb.listAllAirBombs()
@@ -52,6 +53,29 @@ router.route("/update").put(async (req, res) => {
         await dao.storeAirBomb.updateAirBomb(body)
             .then(() => res.json("Updated airBomb."))
             .catch(err => res.status(400).json('Error: ' +err))
+=======
+// HU27 - Get Status AirBomb by Id
+router.get('/:id', async (req, res) => {
+    let dao = await setup()
+    const parametro = req.params.id;
+    await dao.storeAirBomb.getAirBombById(parametro)
+        .then(airBomb => res.json({
+            status:airBomb.status
+        }))
+        .catch(err => res.status(400).json('Error: ' + err))
+});
+
+// HU28, HU30 - Update Status Airbomb and Schedule Airbomb
+router.put("/updatestatus", async (req, res) => {
+    let dao = await setup()
+    let body = req.body;
+    let foundAirBomb = await dao.storeAirBomb.getAirBombByIdGadget(body)
+    if (foundAirBomb) {
+        body.id_Arduino = foundAirBomb.id_Arduino
+        await dao.storeAirBomb.updateAirBomb(body)
+            .then(() => res.json("Updated Status AirBomb."))
+            .catch(err => res.status(400).json('Error: ' + err))
+>>>>>>> 64b2a9f2e416489ebd47700be2b826c0aea0093c
     } else {
         res.status(401).json({
             error: "AirBomb does not exist"
@@ -59,6 +83,7 @@ router.route("/update").put(async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 
 router.route("/:id").delete(async (req, res) => {
     let dao = await setup()
@@ -80,4 +105,16 @@ router.route("/:id").delete(async (req, res) => {
         res.status(400).json('Error: ' + err)
     }
 })
+=======
+// HU 29 - Get All Airbomb
+router.route('/').get(async (req, res) => {
+    let dao = await setup()
+    await dao.storeAirBomb.listAllAirBomb()
+        .then(data => res.json(data))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
+
+
+>>>>>>> 64b2a9f2e416489ebd47700be2b826c0aea0093c
 module.exports = router;

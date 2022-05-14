@@ -13,6 +13,8 @@ app.use(express.json());
 const usersRouter = require('./routes/users');
 const closedspaceRouter = require('./routes/closedspace');
 const alarmsRouter = require('./routes/alarms');
+const metricspaceRouter = require('./routes/metricSpace');
+const airbombRouter = require('./routes/airBombs');
 const passwordRecoveryRouter = require('./routes/passwordReset');
 const airBombRouter = require('./routes/airBombs');
 const sensorRouter = require ('./routes/sensors');
@@ -21,6 +23,8 @@ const sensorRouter = require ('./routes/sensors');
 app.use('/users', usersRouter);
 app.use('/closedspace', closedspaceRouter);
 app.use('/alarms', alarmsRouter);
+app.use('/concentration', metricspaceRouter);
+app.use('/airbomb', airbombRouter);
 app.use('/password-recovery', passwordRecoveryRouter);
 
 app.use('/sensors', sensorRouter);

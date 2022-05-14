@@ -7,12 +7,14 @@ const Arduinos_Sch = require('./Schemas/Arduinos') // creacion del modelo
 const Users_Sch = require('./Schemas/Users') // creacion del modelo
 const ClosedSpace_Sch = require('./Schemas/ClosedSpace')
 const Sensor_Sch = require('./Schemas/Sensors') // creacion del modelo
+const MetricSpace_Sch = require('./Schemas/MetricSpace')
 const setupAirBomb = require('./lib/AirBombs') // crud de acceso a la base de datos
 const setupUsers = require('./lib/Users') // crud de acceso a la base de datos
 const setupAlarms = require('./lib/Alarms') // crud de acceso a la base de datos
 const setupArduino = require('./lib/Arduinos') // crud de acceso a la base de datos
 const setupClosedSpace = require('./lib/ClosedSpace')
 const setupSensor = require('./lib/Sensors') // crud de acceso a la base de datos
+const setupMetricSpace = require('./lib/MetricSpace')
 const defaults = require('defaults')
 
 module.exports = async function (accesDB) {
@@ -25,6 +27,7 @@ module.exports = async function (accesDB) {
   const ArduinoModel=connDB.model('arduinos',Arduinos_Sch);
   const ClosedSpaceModel=connDB.model('closedSpace', ClosedSpace_Sch);
   const SensorModel=connDB.model('sensors', Sensor_Sch);
+  const MetricSpaceModel=connDB.model('metricSpace', MetricSpace_Sch);
 
   //SETEAR STORES
   const storeAirBomb = setupAirBomb(AirBombModel);  
@@ -32,6 +35,7 @@ module.exports = async function (accesDB) {
   const storeUser = setupUsers(UserModel);
   const storeArduino = setupArduino(ArduinoModel);
   const storeClosedSpace = setupClosedSpace(ClosedSpaceModel);
+  const storeMetricSpace = setupMetricSpace(MetricSpaceModel);
   
   const storeSensor = setupSensor(SensorModel);
  return {
@@ -40,6 +44,7 @@ module.exports = async function (accesDB) {
   storeAlarm,
   storeArduino,
   storeClosedSpace,
-  storeSensor
+  storeSensor,
+  storeMetricSpace
  }
 }

@@ -30,7 +30,6 @@ router.route('/add').post(async (req, res) => {
 })
 
 //-HU 10 - Get ClosedSpace
-
 router.route('/').get(async (req, res) => {
     let dao = await setup()
     await dao.storeClosedSpace.listAllClosedSpace()
