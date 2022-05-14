@@ -30,8 +30,9 @@ export class NavComponent {
   ) {}
 
   ngOnInit(): void {
+    console.log('User: ', this.userName);
     if (this.isAuth) {
-      this.authService.getUser(this.userName.username).subscribe(
+      this.authService.getUser(this.userName.email).subscribe(
         (data) => {
           this.user = data;
         },

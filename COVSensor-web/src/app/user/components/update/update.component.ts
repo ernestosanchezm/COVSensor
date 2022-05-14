@@ -24,9 +24,9 @@ export class UpdateComponent implements OnInit {
     private authService: AuthService
   ) {
     this.buildForm();
-    const user = localStorage.getItem('userName');
+    const user = localStorage.getItem('token');
     const username: any = jwtDecode(user);
-    this.authService.getUser(username.username).subscribe(
+    this.authService.getUser(username.email).subscribe(
       (data) => {
         this.form.patchValue(data);
       },
