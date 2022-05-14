@@ -7,22 +7,14 @@ const Arduinos_Sch = require('./Schemas/Arduinos') // creacion del modelo
 const Users_Sch = require('./Schemas/Users') // creacion del modelo
 const ClosedSpace_Sch = require('./Schemas/ClosedSpace')
 const Sensor_Sch = require('./Schemas/Sensors') // creacion del modelo
-<<<<<<< HEAD
 const MetricSpace_Sch = require('./Schemas/MetricSpace') // creacion del modelo
-=======
-const MetricSpace_Sch = require('./Schemas/MetricSpace')
->>>>>>> dev/jesus
 const setupAirBomb = require('./lib/AirBombs') // crud de acceso a la base de datos
 const setupUsers = require('./lib/Users') // crud de acceso a la base de datos
 const setupAlarms = require('./lib/Alarms') // crud de acceso a la base de datos
 const setupArduino = require('./lib/Arduinos') // crud de acceso a la base de datos
 const setupClosedSpace = require('./lib/ClosedSpace')
 const setupSensor = require('./lib/Sensors') // crud de acceso a la base de datos
-<<<<<<< HEAD
 const setupMetricSpace = require('./lib/MetricSpace') // crud de acceso a la base de datos
-=======
-const setupMetricSpace = require('./lib/MetricSpace')
->>>>>>> dev/jesus
 const defaults = require('defaults')
 
 module.exports = async function (accesDB) {
