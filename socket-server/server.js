@@ -34,7 +34,7 @@ io.on("connection", function (socket) {
   console.log("A user connected");
 
   client = mqtt.connect(
-    "mqtt://ec2-3-144-76-41.us-east-2.compute.amazonaws.com"
+    "mqtt://ec2-3-142-221-143.us-east-2.compute.amazonaws.com"
   );
   client.subscribe("coordinator/message");
 

@@ -18,7 +18,7 @@ module.exports = function setupMetricSpace (MetricSpaceModel) {
                 $dayOfMonth: "$creatAt"
                 },
                 {
-                $dayOfMonth: new Date("2022-05-12")
+                $dayOfMonth: new Date("2022-05-13")
                 }
             ]
         }
@@ -33,7 +33,7 @@ module.exports = function setupMetricSpace (MetricSpaceModel) {
                 $month: "$creatAt"
                 },
                 {
-                $month: new Date("2022-05-12")
+                $month: new Date("2022-05-13")
                 }
             ]
         }
@@ -48,7 +48,7 @@ module.exports = function setupMetricSpace (MetricSpaceModel) {
                 $week: "$creatAt"
                 },
                 {
-                $week: new Date("2022-05-12")
+                $week: new Date("2022-05-13")
                 }
             ]
         }

@@ -27,15 +27,15 @@ router.get('/all', async (req, res) => {
 router.get('/:datetype', async (req, res) => {
     let dao = await setup()
     const parametro = req.params.datetype;
-    if (parametro === "day") {
+    if (parametro === "dia") {
         await dao.storeMetricSpace.listDayMetricSpace()
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err))
-    } else if (parametro === "month") {
+    } else if (parametro === "mes") {
         await dao.storeMetricSpace.listMonthMetricSpace()
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err))
-    } else if (parametro === "week") {
+    } else if (parametro === "semana") {
         await dao.storeMetricSpace.listWeekMetricSpace()
         .then(data => res.json(data))
         .catch(err => res.status(400).json('Error: ' + err))

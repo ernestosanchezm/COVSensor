@@ -51,10 +51,10 @@ server.on('published', async (packet, client) => {
     case 'coordinator/disconnected':
       console.log(packet.payload);
       break
-    case 'coordinator/airbomb/off':
+    case 'coordinator/air-bomb/off':
       console.log(String(packet.payload));
       break;
-    case 'coordinator/airbomb/on':
+    case 'coordinator/air-bomb/on':
       console.log(String(packet.payload));
       break;   
     case 'coordinator/alarm/off':
