@@ -34,7 +34,8 @@ io.on("connection", function (socket) {
   console.log("A user connected");
 
   client = mqtt.connect(
-    "mqtt://ec2-3-142-221-143.us-east-2.compute.amazonaws.com"
+    //"mqtt://ec2-3-142-221-143.us-east-2.compute.amazonaws.com"
+    "mqtt://192.168.1.4"
   );
   client.subscribe("coordinator/message");
 
@@ -64,21 +65,33 @@ io.on("connection", function (socket) {
     io.emit("me", "Alguien");
   });
 
-  socket.on("alarm/off", (msg) => {
-    const alarm = {id: id, status: "off"};
-    io.emit('client:alarm/off', alarm)
+  socket.on("alarm/on", (msg) => {
+    console.log("APAGAR ALARMA");
+    client.publish("coordinator/alarm/on","A1");
+    // const alarm = {id: id, status: "off"};
+    // io.emit('client:alarm/off', alarm)
     console.log("Alarm", msg);
   });
 
-  socket.on("air-bomb/on", (msg) => {
-    const airbomb = {id: id, status: "on"};
-    io.emit('client:air-bomb/on', airbomb)
+  socket.on("alarm/off", (msg) => {
+    console.log("APAGAR ALARMA");
+    client.publish("coordinator/alarm/off","A1");
+    // const alarm = {id: id, status: "off"};
+    // io.emit('client:alarm/off', alarm)
+    console.log("Alarm", msg);
+  });
+
+  socket.on("air-bomb/on", (msg) => { 
+    client.publish("coordinator/air-bomb/on","A1");
+    // const airbomb = {id: id, status: "on"};
+    // io.emit('client:air-bomb/on', airbomb)
     console.log("Air Bomb", msg);
   });
 
   socket.on("air-bomb/off", (msg) => {
-    const airbomb = {id: id, status: "off"};
-    io.emit('client:air-bomb/off', airbomb)
+    client.publish("coordinator/air-bomb/off","A1");
+    // const airbomb = {id: id, status: "off"};
+    // io.emit('client:air-bomb/off', airbomb)
     console.log("Air Bomb", msg);
   });
 

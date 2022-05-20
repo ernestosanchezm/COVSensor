@@ -65,7 +65,7 @@ server.on('published', async (packet, client) => {
       break;
     case 'coordinator/message':      
       const payload = parsePayload(packet.payload)
-      console.log(payload.metric);
+      console.log("METRICA MQTT: "+payload.metric);
           
       if (payload) {           
         

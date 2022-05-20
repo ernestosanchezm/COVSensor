@@ -55,6 +55,14 @@ export class AirControlComponent implements OnInit {
         idArduino: d.id_Arduino,
       }));
     });
+
+    this.dataSource = [
+      {
+        codigoEspacioCerrado: 'ES-1',
+        codigoBombaAire: 'B1',
+        estatus: true,
+      },
+    ];
   }
 
   ngOnInit(): void {}
@@ -70,13 +78,7 @@ export class AirControlComponent implements OnInit {
           .subscribe((resAirBomb) => {
             console.log('Air bomb: ', resAirBomb);
             this.airBomb = resAirBomb;
-            this.dataSource = [
-              {
-                codigoEspacioCerrado: this.myBomba.value.codigo,
-                codigoBombaAire: this.airBomb?._id,
-                estatus: this.airBomb?.status === 'Activo' ? true : false,
-              },
-            ];
+            
           });
         this.alarmService
           .getAlarmById(this.sensor.id_Arduino)
@@ -86,8 +88,8 @@ export class AirControlComponent implements OnInit {
             this.dataSourceAlarm = [
               {
                 codigoEspacioCerrado: this.myBomba.value.codigo,
-                codigoBombaAire: this.alarm?._id,
-                estatus: this.alarm?.status === 'Activo' ? true : false,
+                codigoAlarma: 'A1',
+                estatus: true,
               },
             ];
           });
