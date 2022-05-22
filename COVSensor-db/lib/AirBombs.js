@@ -22,6 +22,12 @@ module.exports = function setupAirBomb (AirBombModel) {
     });
   }
 
+  function getByIdArduino(_filterAirBomb) {
+    return AirBombModel.findOne({
+      id_Arduino: _filterAirBomb
+    });
+  }
+
   async function updateAirBomb(_airBomb) {
     const foundAirBomb = await AirBombModel.findOne({
       _id: _airBomb._id.valueOf()
@@ -75,6 +81,7 @@ function listAllAirBomb() {
     updateAirBomb,
     listAllAirBomb,
     listAllAirBombs,
-    deleteAirBombById
+    deleteAirBombById,
+    getByIdArduino
   }
 }

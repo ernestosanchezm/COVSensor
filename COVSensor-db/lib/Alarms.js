@@ -29,6 +29,12 @@ module.exports = function setupAlarm (AlarmModel) {
       _id: _filterAlarms
     });
   }
+
+  function getAlarmsByIdArduino(_filterAlarms) {
+    return AlarmModel.findOne({
+      id_Arduino: _filterAlarms
+    });
+  }
   
   //-HU 24, HU 31 - Update Alarms and Turn Off Alarm
   function getAlarmsByUsername(_filterAlarms) {
@@ -61,6 +67,7 @@ module.exports = function setupAlarm (AlarmModel) {
     getAlarmsById,
     getAlarmsByUsername,
     updateAlarms,
-    deleteAlarmsByUsername
+    deleteAlarmsByUsername,
+    getAlarmsByIdArduino
   }
 }

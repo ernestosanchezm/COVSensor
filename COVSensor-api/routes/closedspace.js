@@ -89,7 +89,6 @@ router.delete("/:_id", async (req, res) => {
 router.get('/ardu/:id_arduino', async (req, res) => {
     let dao = await setup()
     const parametro = req.params.id_arduino;
-    console.log(parametro)
     let body = await dao.storeClosedSpace.getClosedSpacebyArduino(parametro)
     //console.log(body)
         .then(data => res.json(data))
