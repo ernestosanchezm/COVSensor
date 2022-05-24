@@ -32,4 +32,10 @@ export class AlarmService {
       .get(`${environment.apiUrl}/alarms/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getAlarmByIdArduino(id: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/alarms/arduino/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }
