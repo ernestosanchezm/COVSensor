@@ -73,8 +73,8 @@ export class AirControlComponent implements OnInit {
             this.dataSource = [
               {
                 codigoEspacioCerrado: this.myBomba.value.codigo,
-                codigoBombaAire: this.airBomb?._id,
-                estatus: this.airBomb?.status === 'Activo' ? true : false,
+                codigoBombaAire: this.airBomb._id,
+                estatus: this.airBomb.status === 'apagado' ? false : true,
               },
             ];
           });
@@ -86,8 +86,8 @@ export class AirControlComponent implements OnInit {
             this.dataSourceAlarm = [
               {
                 codigoEspacioCerrado: this.myBomba.value.codigo,
-                codigoBombaAire: this.alarm?._id,
-                estatus: this.alarm?.status === 'Activo' ? true : false,
+                codigoBombaAire: this.alarm._id,
+                estatus: this.alarm.status === 'apagado' ? false : true,
               },
             ];
           });
