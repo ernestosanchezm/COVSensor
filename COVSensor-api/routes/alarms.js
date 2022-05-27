@@ -46,6 +46,14 @@ router.get('/:id', async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
+router.get('/arduino/:id_arduino', async (req, res) => {
+    let dao = await setup()
+    const parametro = req.params.id_arduino;
+    await dao.storeAlarm.getAlarmsByIdArduino(parametro)
+        .then(alarms => res.json(alarms))
+        .catch(err => res.status(400).json('Error: ' + err))
+});
+
 //-HU 24, HU 31 - Update Alarms and Turn Off Alarm
 router.put("/update", async (req, res) => {
     let dao = await setup()
