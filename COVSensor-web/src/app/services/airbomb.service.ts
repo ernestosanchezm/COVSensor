@@ -32,4 +32,10 @@ export class AirbombService {
       .get(`${environment.apiUrl}/air-bombs/${id}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getAirBombByIdArduino(id: string): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/air-bombs/arduino/${id}`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

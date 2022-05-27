@@ -74,22 +74,28 @@ export class AirControlComponent implements OnInit {
       .subscribe((data) => {
         this.sensor = data;
         this.airBombService
-          .getAirBombById(this.sensor.id_Arduino)
+          .getAirBombByIdArduino(this.myBomba.value.idArduino)
           .subscribe((resAirBomb) => {
             console.log('Air bomb: ', resAirBomb);
             this.airBomb = resAirBomb;
-            
+            this.dataSource = [
+              {
+                codigoEspacioCerrado: this.myBomba.value.codigo,
+                codigoBombaAire: this.airBomb._id,
+                estatus: this.airBomb.status === 'apagado' ? false : true,
+              },
+            ];
           });
         this.alarmService
-          .getAlarmById(this.sensor.id_Arduino)
+          .getAlarmByIdArduino(this.myBomba.value.idArduino)
           .subscribe((resAlarm) => {
             console.log('Alarm: ', resAlarm);
             this.alarm = resAlarm;
             this.dataSourceAlarm = [
               {
                 codigoEspacioCerrado: this.myBomba.value.codigo,
-                codigoAlarma: 'A1',
-                estatus: true,
+                codigoAlarma: this.alarm._id,
+                estatus: this.alarm.status === 'Activado' ? true : false,
               },
             ];
           });

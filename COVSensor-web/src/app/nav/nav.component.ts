@@ -12,8 +12,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  isAuth = localStorage.getItem('token');
-  userName: any = jwt(this.isAuth);
+  isAuth = null;
+  userName: any = null;
   user = null;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -30,8 +30,9 @@ export class NavComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log('User: ', this.userName);
+    this.isAuth = localStorage.getItem('token');
     if (this.isAuth) {
+      this.userName = jwt(this.isAuth);
       this.authService.getUser(this.userName.email).subscribe(
         (data) => {
           this.user = data;
