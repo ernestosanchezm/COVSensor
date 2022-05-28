@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
+  image1 = "assets/oficina.webp";
+  image2 = "assets/sensored.webp";
+
   constructor(private location: Location) {}
 
   ngOnInit(): void {}
