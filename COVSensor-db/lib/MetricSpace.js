@@ -11,33 +11,23 @@ module.exports = function setupMetricSpace (MetricSpaceModel) {
   }
 
   function listDayMetricSpace() {
-    return MetricSpaceModel.find({
-        $expr: {
-            $eq: [
-                {
-                $dayOfMonth: "$creatAt"
-                },
-                {
-                $dayOfMonth: new Date("2022-05-13")
-                }
-            ]
-        }
-    })
+    //{ $group : { _id : "$item" } } ]
+    //console.log(MetricSpaceModel.aggregate( [ { $group : { _id : "$id_ClosedSpace" } } ] ));
+    return MetricSpaceModel.aggregate( [ { 
+      $group : { 
+        _id: { $dateToString: { format: "%Y-%m-%d %H", date: "$creatAt" } },
+        value:{$avg: '$value'}
+      } 
+    } ] );  
   }
 
   function listMonthMetricSpace() {
-    return MetricSpaceModel.find({
-        $expr: {
-            $eq: [
-                {
-                $month: "$creatAt"
-                },
-                {
-                $month: new Date("2022-05-13")
-                }
-            ]
-        }
-    })
+    return MetricSpaceModel.aggregate( [ { 
+      $group : { 
+        _id: { $dateToString: { format: "%Y-%m", date: "$creatAt" } },
+        value:{$avg: '$value'}
+      } 
+    } ] );   
   }
 
   function listWeekMetricSpace() {
