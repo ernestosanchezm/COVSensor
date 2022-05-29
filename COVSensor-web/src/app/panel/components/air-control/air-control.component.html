@@ -3,7 +3,7 @@
     <label class="air-label">Campos cerrados: </label>
     <form [formGroup]="form">
       <mat-form-field appearance="fill">
-        <mat-label>Bombas</mat-label>
+        <mat-label>Espacios Cerrados</mat-label>
         <mat-select [formControl]="myBomba" (selectionChange)="getArduino()">
           <mat-option>None</mat-option>
           <mat-option *ngFor="let bomba of bombasAire" [value]="bomba">

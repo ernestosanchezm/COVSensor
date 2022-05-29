@@ -13,10 +13,11 @@ export class Co2ControlComponent implements OnInit {
   form: FormGroup;
   informeSelected = '';
   myBomba = new FormControl('');
-  bombasAire: string[] = ['Alabama', 'Alaska', 'Arizona'];
+  bombasAire: string[] = ['ES1'];
   actual;
 
   view: [number, number] = [700, 300];
+  viewMultiDate: [number, number] = [1400, 400];
 
   // options
   legend: boolean = true;
@@ -26,8 +27,10 @@ export class Co2ControlComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Hora';
+  xAxisLabel: string = 'Segundo';
   yAxisLabel: string = 'Concentracion PPM';
+  xAxisLabelMultiDate: string = '';
+  yAxisLabelMultiDate: string = 'Concentracion PPM';
   timeline: boolean = true;
 
   colorScheme: Color = {
@@ -99,22 +102,27 @@ export class Co2ControlComponent implements OnInit {
   }
 
   getDateType() {
-    let count = 0;
     this.concetrationService
       .getConcentrationByDate(this.informeSelected)
       .subscribe((data) => {
+        this.xAxisLabelMultiDate = this.informeSelected;
         this.multiDate[0].series = [];
         this.multiDate[0].name = this.informeSelected;
         this.multiDate[0].series.shift();
         data.forEach((d: any) => {
           this.multiDate[0].series.push({
-            name: count,
+            name: d._id,
             value: d.value,
           });
-          count++;
         });
-        this.multiDate = [...this.multiDate];
-        console.log(this.multiDate);
+        const sortedMultiDate = this.multiDate.sort(function(a,b) {
+          a = Number(a._id.split('-').join(''));
+          b = Number(b._id.split('-').join(''));
+          return a - b;
+        });
+        console.log(sortedMultiDate);
+        this.multiDate = [...sortedMultiDate];
+        // console.log(this.multiDate);
       });
   }
 }
