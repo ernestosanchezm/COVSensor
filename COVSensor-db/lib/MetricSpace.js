@@ -15,7 +15,7 @@ module.exports = function setupMetricSpace (MetricSpaceModel) {
     //console.log(MetricSpaceModel.aggregate( [ { $group : { _id : "$id_ClosedSpace" } } ] ));
     return MetricSpaceModel.aggregate( [ { 
       $group : { 
-        _id: { $dateToString: { format: "%Y-%m-%d %H", date: "$creatAt" } },
+        _id: { $dateToString: { format: "%Y-%m-%d", date: "$creatAt" } },
         value:{$avg: '$value'}
       } 
     } ] );  
