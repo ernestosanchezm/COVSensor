@@ -28,16 +28,21 @@ export class UpdateSensorComponent implements OnInit {
   ) {
     this.buildForm();
     const { navigationId, ...rest } = history.state;
-    this.closedspaceService
-      .getByArduino(rest.id_Arduino)
-      .subscribe((resCloseSpace) => {
-        this.data = {
-          codigoEspacioCerrado: resCloseSpace.codigo,
-          ...rest,
-          status: rest.status === 'Asignado' ? true : false,
-        };
-        this.form.patchValue(this.data);
-      });
+    this.data = {
+      ...rest,
+      mySensor: history.state.id_Arduino,
+    };
+    this.form.patchValue(this.data);
+    // this.closedspaceService
+    //   .getByArduino(rest.id_Arduino)
+    //   .subscribe((resCloseSpace) => {
+    //     this.data = {
+    //       codigoEspacioCerrado: resCloseSpace.codigo,
+    //       ...rest,
+    //       status: rest.status === 'Asignado' ? true : false,
+    //     };
+    //     this.form.patchValue(this.data);
+    //   });
   }
 
   ngOnInit(): void {}
@@ -48,7 +53,7 @@ export class UpdateSensorComponent implements OnInit {
       id_Arduino: [''],
       description: ['', [Validators.required]],
       status: [false, Validators.requiredTrue],
-      codigoEspacioCerrado: ['', Validators.required],
+      // codigoEspacioCerrado: ['', Validators.required],
     });
   }
 
@@ -64,9 +69,9 @@ export class UpdateSensorComponent implements OnInit {
     return this.form.get('status');
   }
 
-  get codigoEspacioCerradoField() {
-    return this.form.get('codigoEspacioCerrado');
-  }
+  // get codigoEspacioCerradoField() {
+  //   return this.form.get('codigoEspacioCerrado');
+  // }
 
   openDialog() {
     const sensorData = {

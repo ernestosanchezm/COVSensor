@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ClosedspaceService } from 'src/app/services/closedspace.service';
+import { SensorService } from 'src/app/services/sensor.service';
 
 @Component({
   selector: 'app-sensor-detail',
@@ -9,10 +10,13 @@ import { ClosedspaceService } from 'src/app/services/closedspace.service';
 })
 export class SensorDetailComponent implements OnInit {
   closeSpace;
+  id_Arduino;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private closeSpaceService: ClosedspaceService
+    private closeSpaceService: ClosedspaceService,
+    private sensorService: SensorService
+  
   ) {}
 
   ngOnInit(): void {

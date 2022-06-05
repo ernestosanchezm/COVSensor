@@ -72,7 +72,7 @@ export class Co2ControlComponent implements OnInit {
 
   multiDate = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   initData() {
     const array = [];
@@ -115,12 +115,16 @@ export class Co2ControlComponent implements OnInit {
             value: d.value,
           });
         });
-        const sortedMultiDate = this.multiDate.sort(function(a,b) {
-          a = Number(a._id.split('-').join(''));
-          b = Number(b._id.split('-').join(''));
-          return a - b;
-        });
-        console.log(sortedMultiDate);
+        const sortedMultiDate = this.multiDate;
+        console.log("sorted", sortedMultiDate[0].series);
+        const orderArray = sortedMultiDate[0].series.sort(
+          function (a, b) {
+            a = Number(a.name.split('-').join(''));
+            b = Number(b.name.split('-').join(''));
+            return a - b;
+          }
+        );
+        console.log(orderArray);
         this.multiDate = [...sortedMultiDate];
         // console.log(this.multiDate);
       });

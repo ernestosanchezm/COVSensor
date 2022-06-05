@@ -14,4 +14,10 @@ export class ConcentrationService {
       .get(`${environment.apiUrl}/concentration/${dateType}`)
       .pipe(catchError((e) => throwError(e)));
   }
+
+  getAllConcentration(): Observable<any> {
+    return this.http
+      .get(`${environment.apiUrl}/concentration/all`)
+      .pipe(catchError((e) => throwError(e)));
+  }
 }

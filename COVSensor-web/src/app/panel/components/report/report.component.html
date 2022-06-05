@@ -1,4 +1,4 @@
-<div class="report">
+<!-- <div class="report">
   <h1>Informe de Concentracion</h1>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="Periodo">
@@ -26,4 +26,49 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+</div> -->
+
+<h1>Informe de Concentracion</h1>
+<mat-form-field appearance="fill" class="select-container">
+  <mat-label>Espacio Cerrado</mat-label>
+  <mat-select [(value)]="informeSelected" (selectionChange)="getSpace()">
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let bomba of bombasAire" [value]="bomba">
+      {{ bomba }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+<div class="report">
+  <table mat-table [dataSource]="elementData" class="mat-elevation-z8" matTableExporter #exporter="matTableExporter">
+    <!-- Position Column -->
+    <ng-container matColumnDef="ClosedSpaceID">
+      <mat-header-cell *matHeaderCellDef> ClosedSpaceID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id_ClosedSpace}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Value">
+      <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="CreationDate">
+      <mat-header-cell *matHeaderCellDef> CreateAt </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.creatAt}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+</div>
+
+<div class="containerButtons">
+  <button mat-raised-button color="primary" (click)="exporter.exportTable('xlsx', {fileName:'table'})">Export to
+    xlsx</button>
+  <button id="export" mat-raised-button color="primary" (click)="exporter.exportTable('csv')">Export To csv</button>
+  <button id="export" mat-raised-button color="primary" (click)="exporter.exportTable('json')">Export To json</button>
+  <button id="export" mat-raised-button color="primary" (click)="exporter.exportTable('txt')">Export To txt</button>
 </div>

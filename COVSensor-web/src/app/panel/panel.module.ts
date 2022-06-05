@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
@@ -32,6 +33,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatButtonModule,
     MatSlideToggleModule,
     NgxChartsModule,
+    MatTableExporterModule
   ],
 })
 export class PanelModule {}
