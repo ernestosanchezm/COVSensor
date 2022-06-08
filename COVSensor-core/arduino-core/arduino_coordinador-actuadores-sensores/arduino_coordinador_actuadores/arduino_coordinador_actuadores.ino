@@ -38,6 +38,7 @@ float initTimer;
 
 void setup(void){
   Serial.begin(9600); 
+  
   pinMode(8 , OUTPUT);
   mySerial.begin(9600);   //inicializar SERIAL de 
   pinMode(pwmPin, INPUT);
