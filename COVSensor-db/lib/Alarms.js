@@ -52,6 +52,15 @@ module.exports = function setupAlarm (AlarmModel) {
     return newAlarms;
   }
 
+  async function updateStatusAlarm(_alarm) {
+    const foundAlarms = await AlarmModel.findOne({
+      _id: _alarm.alarmId
+    });
+    foundAlarms.status = _alarm.status;
+    const newAlarms = await foundAlarms.save();
+    return newAlarms;
+  }
+
   //-Extra - Delete Alarms
   function deleteAlarmsByUsername(_username) {
     return AlarmModel.deleteOne({
@@ -68,6 +77,7 @@ module.exports = function setupAlarm (AlarmModel) {
     getAlarmsByUsername,
     updateAlarms,
     deleteAlarmsByUsername,
-    getAlarmsByIdArduino
+    getAlarmsByIdArduino,
+    updateStatusAlarm
   }
 }

@@ -14,6 +14,6 @@ module.exports = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'closedSpace',
         required:true,
-        default:"626ac1be2cb9854d7462db10"
+        default:"627c881c7a8d43c4cfd5b59f"
         },
 })

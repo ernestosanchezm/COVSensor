@@ -33,7 +33,8 @@ server.on('clientDisconnected', client => {
 let User,Arduino,Alarm,AirBomb,Sensor,MetricSpace;   //stores de la base de datos
 const clients=new Map();
 const datosVariables=new Map();
-
+const AlarmaCode="62725654b9d02f4d547bc256";
+const BombAirCode="626ecbf72a2d66dde419ab6d";
 server.on('ready',async () => {
   const services=await db("mongodb+srv://USER_COVSENSOR:123@cluster0.cbbrw.mongodb.net/covsensor-db?retryWrites=true&w=majority").catch(handleFatalError);
   User=services.storeUser;
@@ -51,16 +52,18 @@ server.on('published', async (packet, client) => {
     case 'coordinator/disconnected':
       console.log(packet.payload);
       break
-    case 'coordinator/air-bomb/off':
+    case 'coordinator/air-bomb/off':     
       console.log(String(packet.payload));
       break;
     case 'coordinator/air-bomb/on':
       console.log(String(packet.payload));
       break;   
     case 'coordinator/alarm/off':
+      Alarm.updateStatusAlarm({alarmId:AlarmaCode,status:"Desactivado"});
       console.log(String(packet.payload));
       break;
     case 'coordinator/alarm/on':
+      Alarm.updateStatusAlarm({alarmId:AlarmaCode,status:"Activado"});
       console.log(String(packet.payload));
       break;
     case 'coordinator/message':      
